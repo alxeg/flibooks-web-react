@@ -3,6 +3,7 @@ import webpack from 'webpack';
 import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
+import proxy from 'http-proxy-middleware';
 
 /* eslint-disable no-console */
 
@@ -16,6 +17,14 @@ app.use(require('webpack-dev-middleware')(compiler, {
 }));
 
 app.use(require('webpack-hot-middleware')(compiler));
+
+app.use("/api", proxy({
+    target: 'http://localhost:8000', 
+    pathRewrite: {
+      '^/api' : ''
+    },
+    logLevel: 'debug'
+}));
 
 app.get('*', function(req, res) {
   res.sendFile(path.join( __dirname, '../src/index.html'));

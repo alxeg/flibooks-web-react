@@ -1,3 +1,4 @@
 export default {
-    numAjaxCallsInProgress: 0
+    numAjaxCallsInProgress: 0,
+    authors: []
 };

@@ -1,12 +1,16 @@
 import React, {PropTypes} from 'react';
+
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import {deepOrange500} from 'material-ui/styles/colors';
+import {deepOrange500, cyan50, cyan600} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
+
+import Paper from 'material-ui/Paper';
+import ClearFix from 'material-ui/internal/ClearFix';
 
 import Header from './common/Header';
 
@@ -16,7 +20,28 @@ const muiTheme = getMuiTheme({
   palette: {
     accent1Color: deepOrange500,
   },
+  appBar: {
+      color: cyan600,
+      height: 50
+  },
+  tabs: {
+  }
 });
+
+const styles = {
+    header: {
+        position: 'fixed',
+        top: 0,
+        width: '100%'
+    },
+    content: {
+        marginTop: 130, 
+        width: '100%',
+        height: 'calc(100% - 130px)', 
+        padding: 20,
+        overflow: 'auto'
+    }
+};
 
 class App extends React.Component {
     constructor(props, context) {
@@ -25,16 +50,11 @@ class App extends React.Component {
             menuOpened: false
         };
 
-        this.toggleMenu = this.toggleMenu.bind(this);
-        this.showMenu = this.showMenu.bind(this);
+        this.onOptionsClick = this.onOptionsClick.bind(this);
     }
 
-    toggleMenu() {
-        this.showMenu(!this.state.menuOpened);
-    }
+    onOptionsClick() {
 
-    showMenu(show) {
-        this.setState({menuOpened: show});
     }
 
     render() {
@@ -43,18 +63,15 @@ class App extends React.Component {
                 <div>
                     <Header
                         loading={this.props.loading}
-                        onMenuClick = {this.toggleMenu}
+                        onOptionsClick = {this.onOptionsClick}
+                        style={styles.header}
                     />
-                    <div>
-                        <Drawer
-                            docked={false}
-                            open={this.state.menuOpened}
-                            onRequestChange={this.showMenu}
-                        > 
-                        <AppBar />
-                        </Drawer>
+                    <Paper style={styles.content} zDepth={2} rounded={false} >
+                        <div>
                         {this.props.children}
-                    </div>
+                        </div>
+                    </Paper>
+                    
                 </div>
             </MuiThemeProvider>
         );

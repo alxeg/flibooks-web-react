@@ -1,19 +1,54 @@
 import React, { PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
-import AppBar from 'material-ui/AppBar';
+import { browserHistory } from 'react-router';
 
-const Header = ({loading, onMenuClick}) => {
+import AppBar from 'material-ui/AppBar';
+import LinearProgress from 'material-ui/LinearProgress';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import ActionHome from 'material-ui/svg-icons/action/home';
+
+import NavigationBar from './NavigationBar';
+
+
+const Header = ({loading, onOptionsClick, style}) => {
+    const goHome = () => {
+        browserHistory.push("/");
+    };
+
     return(
-        <AppBar
-            title="Flibooks Web Applicarion"
-            onLeftIconButtonTouchTap={onMenuClick}
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-        />
+        <div style={style} >
+            <AppBar
+                title="Flibooks Web Applicarion"
+                zDepth={0}
+                iconElementLeft={
+                    <IconButton onClick={goHome}>
+                        <ActionHome />
+                    </IconButton>
+                }
+                iconElementRight={
+                      <IconMenu
+                        iconButtonElement={
+                            <IconButton><MoreVertIcon /></IconButton>
+                        }
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                        >
+                            <MenuItem primaryText="Options" />
+                    </IconMenu>
+                }
+            />
+            <NavigationBar />
+            {loading && <LinearProgress mode="indeterminate" />}
+        </div>
       );
 };
+
 Header.propTypes = {
     loading: PropTypes.bool.isRequired,
-    onMenuClick: PropTypes.func.isRequired
+    onOptionsClick: PropTypes.func.isRequired,
+    style: PropTypes.object
 };
 
 export default Header;
