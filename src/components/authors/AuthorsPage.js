@@ -5,9 +5,18 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
+import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {GridList, GridTile} from 'material-ui/GridList';
+import {List, ListItem} from 'material-ui/List';
+import SocialPeople from 'material-ui/svg-icons/social/people';
+
+import {
+    cyan600
+} from 'material-ui/styles/colors';
+
+const style = {margin: 5};
 
 class AuthorsPage extends React.Component {
     
@@ -19,7 +28,7 @@ class AuthorsPage extends React.Component {
             authors: []
         };
 
-        this.onSearchButton = this.onSearchButton.bind(this);
+        this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     }
     
@@ -29,7 +38,8 @@ class AuthorsPage extends React.Component {
         });
     }
 
-    onSearchButton() {
+    onSearchSubmit(event) {
+        event.preventDefault();
         this.props.actions.searchAuthors(this.state.searchFieldValue);
     }
 
@@ -37,7 +47,7 @@ class AuthorsPage extends React.Component {
         return (
             <div>
                 <h1>Authors</h1>
-                <form>
+                <form onSubmit={this.onSearchSubmit}>
                     <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end',width: '100%'}}>
                         <TextField
                             hintText="Search authors"
@@ -50,21 +60,38 @@ class AuthorsPage extends React.Component {
                             primary
                             label="Search" 
                             style={{flex: 0, width: 400, margin: '0 0 0 1rem'}}
-                            onClick={this.onSearchButton}
+                            type="submit"
                         />
                     </div>
                 </form>
+                <List>
+                    {this.props.authors.map(author =>
+                        <ListItem 
+                            key={author.ID} 
+                            primaryText={author.name}
+                            leftAvatar={
+                                <Avatar
+                                    icon={<SocialPeople />}
+                                    backgroundColor={cyan600}
+                                    size={30}
+                                    style={style}
+                                    />
+                            } />
+                    )}
+                </List>
             </div>
         );
     }
 }
 
 AuthorsPage.propTypes = {
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    authors: PropTypes.array
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
+        authors: state.authors
     };
 };
 

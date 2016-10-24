@@ -40,7 +40,9 @@ const Header = ({loading, onOptionsClick, style}) => {
                 }
             />
             <NavigationBar />
-            {loading && <LinearProgress mode="indeterminate" />}
+            <div style={{margin: 2}}>
+                {loading && <LinearProgress mode="indeterminate" />}
+            </div>
         </div>
       );
 };

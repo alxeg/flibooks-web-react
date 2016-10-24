@@ -11,6 +11,9 @@ const port = 3000;
 const app = express();
 const compiler = webpack(config);
 
+//const proxyTo = 'http://localhost:8000';
+const proxyTo = 'http://192.168.13.33:8000';
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -19,7 +22,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use("/api", proxy({
-    target: 'http://localhost:8000', 
+    target: proxyTo, 
     pathRewrite: {
       '^/api' : ''
     },
