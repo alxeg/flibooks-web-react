@@ -10,10 +10,14 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {GridList, GridTile} from 'material-ui/GridList';
 import {List, ListItem} from 'material-ui/List';
+
 import SocialPeople from 'material-ui/svg-icons/social/people';
 
+import toast from 'toast.js';
+
 import {
-    cyan600
+    cyan600,
+    deepOrange500
 } from 'material-ui/styles/colors';
 
 const style = {margin: 5};
@@ -40,7 +44,16 @@ class AuthorsPage extends React.Component {
 
     onSearchSubmit(event) {
         event.preventDefault();
-        this.props.actions.searchAuthors(this.state.searchFieldValue);
+        this.props.actions.searchAuthors(this.state.searchFieldValue)
+            .catch(error => {
+                this.showError(error.message);
+            });
+    }
+
+    showError(message) {
+        toast.error({
+            message
+        });
     }
 
     render() {
@@ -90,8 +103,9 @@ AuthorsPage.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+    let authors =  Array.isArray(state.authors) ? state.authors : []; 
     return {
-        authors: state.authors
+        authors
     };
 };
 

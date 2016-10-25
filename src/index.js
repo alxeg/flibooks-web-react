@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import {Router, browserHistory} from 'react-router';
 import routes from './routes';
 import './styles/styles.css'; //Webpack can import CSS files too!
+import 'animate.css/animate.min.css';
 
 const store = configureStore();
 
