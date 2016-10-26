@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import {Link} from 'react-router';
+import { browserHistory } from 'react-router';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -32,7 +32,7 @@ class AuthorsPage extends React.Component {
             authors: []
         };
 
-        this.onSearchSubmit = this.onSearchSubmit.bind(this);
+        this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
         this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     }
     
@@ -41,8 +41,12 @@ class AuthorsPage extends React.Component {
             searchFieldValue: e.target.value
         });
     }
+    
+    handleAuthorClick(author) {
+        browserHistory.push(`/authors/${author.ID}`, {author});
+    }
 
-    onSearchSubmit(event) {
+    handleSearchSubmit(event) {
         event.preventDefault();
         this.props.actions.searchAuthors(this.state.searchFieldValue)
             .catch(error => {
@@ -60,7 +64,7 @@ class AuthorsPage extends React.Component {
         return (
             <div>
                 <h1>Authors</h1>
-                <form onSubmit={this.onSearchSubmit}>
+                <form onSubmit={this.handleSearchSubmit}>
                     <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end',width: '100%'}}>
                         <TextField
                             hintText="Search authors"
@@ -89,7 +93,9 @@ class AuthorsPage extends React.Component {
                                     size={30}
                                     style={style}
                                     />
-                            } />
+                            } 
+                            onClick={this.handleAuthorClick.bind(this, author)}
+                            />
                     )}
                 </List>
             </div>
