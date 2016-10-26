@@ -1,4 +1,7 @@
 export default {
     numAjaxCallsInProgress: 0,
-    authors: []
+    authorsSearch: {
+        term: '',
+        authors: []
+    }
 };

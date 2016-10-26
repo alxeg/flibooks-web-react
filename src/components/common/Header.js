@@ -28,13 +28,13 @@ const Header = ({loading, onOptionsClick, style}) => {
                     </IconButton>
                 }
                 iconElementRight={
-                      <IconMenu
+                    <IconMenu
                         iconButtonElement={
                             <IconButton><MoreVertIcon /></IconButton>
                         }
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                        >
+                    >
                             <MenuItem primaryText="Options" />
                     </IconMenu>
                 }

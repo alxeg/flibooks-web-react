@@ -18,7 +18,7 @@ const processResponse = (response) => {
         case 200:
             return response.json();
         default:
-            throw (Error(response.statusText));
+            throw response.text();
     }
 };
 

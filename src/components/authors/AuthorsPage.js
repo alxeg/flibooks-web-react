@@ -28,7 +28,7 @@ class AuthorsPage extends React.Component {
         super(props, context);
 
         this.state = {
-            searchFieldValue: '',
+            authorsQuery: props.authorsQuery,
             authors: []
         };
 
@@ -38,19 +38,21 @@ class AuthorsPage extends React.Component {
     
     handleTextFieldChange(e) {
         this.setState({
-            searchFieldValue: e.target.value
+            authorsQuery: e.target.value
         });
     }
     
     handleAuthorClick(author) {
-        browserHistory.push(`/authors/${author.ID}`, {author});
+        browserHistory.push(`/authors/${author.ID}`);
     }
 
     handleSearchSubmit(event) {
         event.preventDefault();
-        this.props.actions.searchAuthors(this.state.searchFieldValue)
+        this.props.actions.searchAuthors(this.state.authorsQuery)
             .catch(error => {
-                this.showError(error.message);
+                error.then(message => {
+                    this.showError(message);
+                });
             });
     }
 
@@ -70,7 +72,7 @@ class AuthorsPage extends React.Component {
                             hintText="Search authors"
                             floatingLabelText="Author"
                             style={{flex: 1}}
-                            value={this.state.searchFieldValue} 
+                            value={this.state.authorsQuery} 
                             onChange={this.handleTextFieldChange}
                         />
                         <RaisedButton 
@@ -105,13 +107,18 @@ class AuthorsPage extends React.Component {
 
 AuthorsPage.propTypes = {
     actions: PropTypes.object.isRequired,
+    authorsQuery: PropTypes.string,
     authors: PropTypes.array
 };
 
 const mapStateToProps = (state, ownProps) => {
-    let authors =  Array.isArray(state.authors) ? state.authors : []; 
+
+    const authors =  state.authorsSearch && Array.isArray(state.authorsSearch.authors) ? state.authorsSearch.authors : [];
+    const authorsQuery = state.authorsSearch ? state.authorsSearch.term : '';
+    
     return {
-        authors
+        authors,
+        authorsQuery
     };
 };
 

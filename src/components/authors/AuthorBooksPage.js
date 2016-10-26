@@ -30,13 +30,11 @@ const getAuthorById = (id, authors) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    debugger;
-    
     let author = {name: 'NOT FOUND'};
     
     const authorId = ownProps.params.id;
-    if (authorId && state.authors.length > 0) {
-        author = getAuthorById(authorId, state.authors);
+    if (authorId && state.authorsSearch.authors.length > 0) {
+        author = getAuthorById(authorId, state.authorsSearch.authors);
     }
 
     return {
