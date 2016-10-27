@@ -8,19 +8,29 @@ class AuthorBooksPage extends Component {
     constructor(props, context) {
         super(props, context);
     }
+    
+    componentWillMount() {
+        if ( !this.props.author )  {
+            this.props.actions.getAuthor(this.props.params.id);
+            this.props.actions.getAuthorBooks(this.props.params.id);
+        } else if ( this.props.author.ID != this.props.params.id || !Array.isArray(this.props.author.books) ) {
+            this.props.actions.getAuthorBooks(this.props.params.id);
+        }
+    }
 
     render() {
         return (
             <div>
-                <h1>{this.props.author.name}</h1>
+                <h1>{this.props.author && this.props.author.name}</h1>
             </div>
         );
     }
 }
 
 AuthorBooksPage.propTypes = {
-    author: PropTypes.object
-
+    actions: PropTypes.object.isRequired,
+    author: PropTypes.object,
+    params: PropTypes.object
 };
 
 const getAuthorById = (id, authors) => {
@@ -30,12 +40,14 @@ const getAuthorById = (id, authors) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    let author = {name: 'NOT FOUND'};
+    let author = undefined;
     
     const authorId = ownProps.params.id;
-    if (authorId && state.authorsSearch.authors.length > 0) {
-        author = getAuthorById(authorId, state.authorsSearch.authors);
-    }
+    if (state.authors.author && state.authors.author.ID == authorId) {
+        author = state.authors.author;
+    } else if (authorId && state.authors.authors.length > 0) {
+        author = getAuthorById(authorId, state.authors.authors);
+    } 
 
     return {
         author
@@ -49,3 +61,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthorBooksPage);
+
+

@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import ajaxCallsInProgress from './ajaxStatusReducer';
-import authorsSearch from './authorsReducer';
+import authors from './authorsReducer';
 
 const rootReducer = combineReducers({
     ajaxCallsInProgress,
-    authorsSearch
+    authors
 });
 
 export default rootReducer;

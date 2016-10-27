@@ -113,8 +113,8 @@ AuthorsPage.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
 
-    const authors =  state.authorsSearch && Array.isArray(state.authorsSearch.authors) ? state.authorsSearch.authors : [];
-    const authorsQuery = state.authorsSearch ? state.authorsSearch.term : '';
+    const authors =  state.authors && Array.isArray(state.authors.authors) ? state.authors.authors : [];
+    const authorsQuery = state.authors ? state.authors.term : '';
     
     return {
         authors,
