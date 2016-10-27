@@ -11,7 +11,7 @@ nav {
     padding-top: 20px;
 }
 
-.toast-message {                                                                                                                                                            
+.toast-message {
     position: fixed;
     bottom: 25px;
     left: 50%;
@@ -32,4 +32,25 @@ nav {
 }
 .toast-success {
     background-color: rgba(37, 198, 60, 0.75);
+}
+
+.page-title {
+    text-transform: uppercase;
+    padding-right: 20px;
+    color: #00BCD4;
+}
+
+.book-line {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-bottom: 2px;
+}
+
+.highlighted {
+    background-color: lightgray;
+}
+
+.book-row-download-icon {
+    margin-left: -20px;
+    margin-top: -20px;
 }

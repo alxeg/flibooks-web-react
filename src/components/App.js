@@ -35,9 +35,9 @@ const styles = {
         width: '100%'
     },
     content: {
-        marginTop: 130, 
+        marginTop: 130,
         width: '100%',
-        height: 'calc(100% - 130px)', 
+        height: 'calc(100% - 130px)',
         padding: 20,
         overflow: 'auto'
     }
@@ -71,7 +71,6 @@ class App extends React.Component {
                         {this.props.children}
                         </div>
                     </Paper>
-                    
                 </div>
             </MuiThemeProvider>
         );

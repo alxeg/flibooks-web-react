@@ -4,24 +4,60 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
+import {List, ListItem} from 'material-ui/List';
+import BookRow from '../common/BookRow';
+
+
 class AuthorBooksPage extends Component {
     constructor(props, context) {
         super(props, context);
+
+        this.handleBookClick = this.handleBookClick.bind(this);
+        this.handleDownloadClick = this.handleDownloadClick.bind(this);
     }
-    
+
     componentWillMount() {
+        const author = this.props.author;
+        const authorId = this.props.params.id;
         if ( !this.props.author )  {
-            this.props.actions.getAuthor(this.props.params.id);
-            this.props.actions.getAuthorBooks(this.props.params.id);
-        } else if ( this.props.author.ID != this.props.params.id || !Array.isArray(this.props.author.books) ) {
-            this.props.actions.getAuthorBooks(this.props.params.id);
+            this.props.actions.getAuthor(authorId);
+            this.props.actions.getAuthorBooks(authorId);
+        } else if ( author.ID != authorId || !Array.isArray(author.books) ) {
+            this.props.actions.getAuthorBooks(authorId);
         }
     }
 
+    handleBookClick(book) {
+        console.log(`Open "${book.title}"`);
+    }
+
+    handleDownloadClick(book) {
+        console.log(`Download "${book.title}"`);
+    }
+
     render() {
+        const author = this.props.author;
         return (
             <div>
-                <h1>{this.props.author && this.props.author.name}</h1>
+                {author &&
+                    (<div>
+                        <h1 className="page-title">{author.name}</h1>
+                        {author.books &&
+                            <List>
+                                {author.books.map(book =>
+                                    <BookRow
+                                        key={book.ID}
+                                        book={book}
+                                        showAuthor={false}
+                                        onBookClick={this.handleBookClick}
+                                        onDownloadClick={this.handleDownloadClick}
+                                    />
+                                )}
+                            </List>
+                        }
+                    </div>
+                    )
+                }
             </div>
         );
     }
@@ -35,19 +71,17 @@ AuthorBooksPage.propTypes = {
 
 const getAuthorById = (id, authors) => {
   const found = authors.filter(author => author.ID == id);
-  if (found) return found[0]; 
+  if (found) return found[0];
   return null;
 };
 
 const mapStateToProps = (state, ownProps) => {
     let author = undefined;
-    
+
     const authorId = ownProps.params.id;
     if (state.authors.author && state.authors.author.ID == authorId) {
         author = state.authors.author;
-    } else if (authorId && state.authors.authors.length > 0) {
-        author = getAuthorById(authorId, state.authors.authors);
-    } 
+    }
 
     return {
         author

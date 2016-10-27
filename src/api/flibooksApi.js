@@ -38,8 +38,8 @@ class FlibooksAPI {
     static getAuthor(id) {
         return doHttpCall(`/api/author/${id}`, 'GET'
             ).then(processResponse);
-    }    
-    
+    }
+
     static getAuthorBooks(id) {
         return doHttpCall(`/api/author/${id}/books`, 'GET'
             ).then(processResponse);

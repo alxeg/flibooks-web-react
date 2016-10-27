@@ -22,7 +22,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler));
 
 app.use("/api", proxy({
-    target: proxyTo, 
+    target: proxyTo,
     pathRewrite: {
       '^/api' : ''
     },

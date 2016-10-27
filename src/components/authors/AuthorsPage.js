@@ -23,7 +23,7 @@ import {
 const style = {margin: 5};
 
 class AuthorsPage extends React.Component {
-    
+
     constructor(props, context) {
         super(props, context);
 
@@ -35,13 +35,13 @@ class AuthorsPage extends React.Component {
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
         this.handleTextFieldChange = this.handleTextFieldChange.bind(this);
     }
-    
+
     handleTextFieldChange(e) {
         this.setState({
             authorsQuery: e.target.value
         });
     }
-    
+
     handleAuthorClick(author) {
         browserHistory.push(`/authors/${author.ID}`);
     }
@@ -65,19 +65,19 @@ class AuthorsPage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Authors</h1>
+                <h1 className="page-title">Authors</h1>
                 <form onSubmit={this.handleSearchSubmit}>
                     <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end',width: '100%'}}>
                         <TextField
                             hintText="Search authors"
                             floatingLabelText="Author"
                             style={{flex: 1}}
-                            value={this.state.authorsQuery} 
+                            value={this.state.authorsQuery}
                             onChange={this.handleTextFieldChange}
                         />
-                        <RaisedButton 
+                        <RaisedButton
                             primary
-                            label="Search" 
+                            label="Search"
                             style={{flex: 0, width: 400, margin: '0 0 0 1rem'}}
                             type="submit"
                         />
@@ -85,8 +85,8 @@ class AuthorsPage extends React.Component {
                 </form>
                 <List>
                     {this.props.authors.map(author =>
-                        <ListItem 
-                            key={author.ID} 
+                        <ListItem
+                            key={author.ID}
                             primaryText={author.name}
                             leftAvatar={
                                 <Avatar
@@ -95,7 +95,7 @@ class AuthorsPage extends React.Component {
                                     size={30}
                                     style={style}
                                     />
-                            } 
+                            }
                             onClick={this.handleAuthorClick.bind(this, author)}
                             />
                     )}
@@ -115,7 +115,7 @@ const mapStateToProps = (state, ownProps) => {
 
     const authors =  state.authors && Array.isArray(state.authors.authors) ? state.authors.authors : [];
     const authorsQuery = state.authors ? state.authors.term : '';
-    
+
     return {
         authors,
         authorsQuery

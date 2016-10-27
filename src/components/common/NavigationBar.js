@@ -38,15 +38,15 @@ const NavigationBar = () => {
     return (
         <Tabs initialSelectedIndex={getSelectionIndex()} value={window.location.pathname}>
             {menuItems.map((item) => {
-                return (<Tab key={item.path} 
-                            icon={item.icon} 
-                            value={item.path} 
-                            onActive={handleActive} 
-                            label={item.title} 
+                return (<Tab key={item.path}
+                            icon={item.icon}
+                            value={item.path}
+                            onActive={handleActive}
+                            label={item.title}
                         />);
             })}
-        </Tabs>    
-  );
+        </Tabs>
+    );
 };
 
 NavigationBar.propTypes = {
