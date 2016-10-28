@@ -35,8 +35,12 @@ const NavigationBar = () => {
         return menuItems.findIndex(item => item.path === window.location.pathname);
     };
 
+    const getPath = () => {
+        return  "/" + window.location.pathname.split("/")[1];
+    };
+
     return (
-        <Tabs initialSelectedIndex={getSelectionIndex()} value={window.location.pathname}>
+        <Tabs initialSelectedIndex={getSelectionIndex()} value={getPath()}>
             {menuItems.map((item) => {
                 return (<Tab key={item.path}
                             icon={item.icon}
