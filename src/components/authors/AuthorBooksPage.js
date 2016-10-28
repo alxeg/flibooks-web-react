@@ -34,12 +34,11 @@ class AuthorBooksPage extends Component {
 
 
     handleBookClick(book) {
-        console.log(`Open "${book.title}"`);
         this.setState({detailsShown: true, book});
     }
 
     handleDownloadClick(book) {
-        console.log(`Download "${book.title}"`);
+        this.setState({downloadLink: `/api/book/${book.ID}/download`});
     }
 
     render() {
@@ -57,7 +56,7 @@ class AuthorBooksPage extends Component {
                                         book={book}
                                         showAuthor={false}
                                         onBookClick={this.handleBookClick}
-                                        onDownloadClick={this.handleDownloadClick}
+                                        onDownloadClick={() => this.handleDownloadClick(book)}
                                     />
                                 )}
                             </List>
@@ -69,7 +68,9 @@ class AuthorBooksPage extends Component {
                     open={this.state.detailsShown}
                     book={this.state.book}
                     onCloseAction={() => this.setState({detailsShown: false})}
+                    onDownloadAction={this.handleDownloadClick}
                 />
+                <iframe style={{display:'none'}} src={this.state.downloadLink} onLoad={() => this.setState({downloadLink:'about:blank'})}/>
             </div>
         );
     }

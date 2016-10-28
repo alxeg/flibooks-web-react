@@ -4,7 +4,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import BookUtils from './BookUtils';
 
-const BookCard = ({book}) => {
+const BookCard = ({book, onDownloadAction}) => {
     return (
         <Card>
             <CardHeader
@@ -20,6 +20,7 @@ const BookCard = ({book}) => {
                 <FlatButton
                     primary
                     label="Download"
+                    onTouchTap={() => onDownloadAction(book)}
                 />
             </CardActions>
         </Card>
@@ -27,7 +28,8 @@ const BookCard = ({book}) => {
 };
 
 BookCard.propTypes = {
-    book: PropTypes.object
+    book: PropTypes.object,
+    onDownloadAction: PropTypes.func
 };
 
 export default BookCard;

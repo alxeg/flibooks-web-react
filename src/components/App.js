@@ -28,21 +28,6 @@ const muiTheme = getMuiTheme({
   }
 });
 
-const styles = {
-    header: {
-        position: 'fixed',
-        top: 0,
-        width: '100%'
-    },
-    content: {
-        marginTop: 130,
-        width: '100%',
-        height: 'calc(100% - 130px)',
-        padding: 20,
-        overflow: 'auto'
-    }
-};
-
 class App extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -62,11 +47,11 @@ class App extends React.Component {
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
                     <Header
+                        className="app-header"
                         loading={this.props.loading}
                         onOptionsClick = {this.onOptionsClick}
-                        style={styles.header}
                     />
-                    <Paper style={styles.content} zDepth={2} rounded={false} >
+                    <Paper className="app-content" zDepth={2} rounded={false} >
                         <div>
                         {this.props.children}
                         </div>

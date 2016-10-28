@@ -19,7 +19,10 @@ class BookDetailsDialog extends Component {
                     actions={
                         <FlatButton primary label="Close" onTouchTap={this.props.onCloseAction} />
                     }>
-                    <BookCard book={this.props.book}/>
+                    <BookCard
+                        book={this.props.book}
+                        onDownloadAction={this.props.onDownloadAction}
+                    />
                 </Dialog>
             </div>
         );
@@ -29,7 +32,8 @@ class BookDetailsDialog extends Component {
 BookDetailsDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     book: PropTypes.object,
-    onCloseAction: PropTypes.func
+    onCloseAction: PropTypes.func,
+    onDownloadAction: PropTypes.func
 };
 
 export default BookDetailsDialog;
