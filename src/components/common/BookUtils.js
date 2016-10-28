@@ -1,6 +1,6 @@
 class BookUtils {
     static getBookAuthors(book) {
-        return BookUtils.stripSymbols(book.authors.map(author => author.name).join("; "));
+        return book.authors.map(author => BookUtils.stripSymbols(author.name)).join("; ");
     }
 
     static getBookSeries(book) {
@@ -8,7 +8,7 @@ class BookUtils {
     }
 
     static stripSymbols(str) {
-        return str.replace(/^[, ]*(.*?)[ ,]$/, "$1");
+        return str.replace(/^[, ]*(.*?)[ ,]*$/, "$1");
     }
 }
 
