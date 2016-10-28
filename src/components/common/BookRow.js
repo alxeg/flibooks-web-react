@@ -8,13 +8,15 @@ import IconButton from 'material-ui/IconButton';
 
 import {cyan500} from 'material-ui/styles/colors';
 
+import BookUtils from './BookUtils';
+
 const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick, onDownloadClick}) => {
 
     const getSecondaryLine = () => {
         if (showAuthor) {
-            return book.authors.map(author => author.name).join("; ");
+            return BookUtils.getBookAuthors(book);
         } else {
-            return book.series ? book.series + ' [' + book.ser_no + ']' : ' ' ;
+            return BookUtils.getBookSeries(book) ;
         }
     };
 

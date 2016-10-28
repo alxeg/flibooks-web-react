@@ -45,6 +45,9 @@ nav {
     border-radius: 5px;
     margin-bottom: 2px;
 }
+.author-line {
+    text-transform: uppercase;
+}
 
 .highlighted {
     background-color: lightgray;

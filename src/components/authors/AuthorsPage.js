@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
+import Highlight from 'react-highlighter';
+
 import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -12,6 +14,8 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import {List, ListItem} from 'material-ui/List';
 
 import SocialPeople from 'material-ui/svg-icons/social/people';
+
+import BookUtils from '../common/BookUtils';
 
 import toast from 'toast.js';
 
@@ -87,7 +91,8 @@ class AuthorsPage extends React.Component {
                     {this.props.authors.map(author =>
                         <ListItem
                             key={author.ID}
-                            primaryText={author.name}
+                            className="author-line"
+                            primaryText={<Highlight matchClass="highlighted" search={this.state.authorsQuery}>{BookUtils.stripSymbols(author.name)}</Highlight>}
                             leftAvatar={
                                 <Avatar
                                     icon={<SocialPeople />}

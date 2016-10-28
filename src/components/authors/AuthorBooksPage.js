@@ -6,7 +6,8 @@ import * as flibooksActions from '../../actions/flibooksActions';
 
 import {List, ListItem} from 'material-ui/List';
 import BookRow from '../common/BookRow';
-
+import BookUtils from '../common/BookUtils';
+import BookDetailsDialog from '../common/BookDetailsDialog';
 
 class AuthorBooksPage extends Component {
     constructor(props, context) {
@@ -14,6 +15,10 @@ class AuthorBooksPage extends Component {
 
         this.handleBookClick = this.handleBookClick.bind(this);
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
+
+        this.state = {
+            detailsShown: false
+        };
     }
 
     componentWillMount() {
@@ -27,8 +32,10 @@ class AuthorBooksPage extends Component {
         }
     }
 
+
     handleBookClick(book) {
         console.log(`Open "${book.title}"`);
+        this.setState({detailsShown: true, book});
     }
 
     handleDownloadClick(book) {
@@ -41,7 +48,7 @@ class AuthorBooksPage extends Component {
             <div>
                 {author &&
                     (<div>
-                        <h1 className="page-title">{author.name}</h1>
+                        <h1 className="page-title">{BookUtils.stripSymbols(author.name)}</h1>
                         {author.books &&
                             <List>
                                 {author.books.map(book =>
@@ -58,6 +65,11 @@ class AuthorBooksPage extends Component {
                     </div>
                     )
                 }
+                <BookDetailsDialog
+                    open={this.state.detailsShown}
+                    book={this.state.book}
+                    onCloseAction={() => this.setState({detailsShown: false})}
+                />
             </div>
         );
     }
