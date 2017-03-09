@@ -7,9 +7,7 @@ const GLOBALS = {
 };
 
 export default {
-    debug: true,
     devtool: 'source-map',
-    noInfo: false,
     entry: './src/index',
     target: 'web',
     output: {
@@ -21,20 +19,21 @@ export default {
         contentBase: './dist'
     },
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin(GLOBALS),
         new ExtractTextPlugin('styles.css'),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.UglifyJsPlugin()
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
+        })
     ],
     module: {
         loaders: [
-            { test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel'] },
-            { test: /(\.css)$/, loader: ExtractTextPlugin.extract("css?sourceMap") },
-            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-            { test: /\.(woff|woff2)$/, loader: "url?prefix=font/&limit=5000" },
-            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-            { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
+            { test: /\.js$/, include: path.join(__dirname, 'src'), loader: 'babel-loader', query: { presets: ['es2015','react'], retainLines: 'true' } },
+            { test: /(\.css)$/, loader: ExtractTextPlugin.extract("css-loader?sourceMap") },
+            { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader" },
+            { test: /\.(woff|woff2)$/, loader: "url-loader?prefix=font/&limit=5000" },
+            { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=application/octet-stream" },
+            { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url-loader?limit=10000&mimetype=image/svg+xml" }
         ]
     }
 };
