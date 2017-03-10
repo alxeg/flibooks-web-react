@@ -35,7 +35,8 @@ const Header = ({loading, onOptionsClick, style}) => {
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                            <MenuItem primaryText="Options" />
+                            <MenuItem primaryText="Options"
+                                onClick={onOptionsClick} />
                     </IconMenu>
                 }
             />

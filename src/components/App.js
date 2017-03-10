@@ -13,6 +13,7 @@ import Paper from 'material-ui/Paper';
 import ClearFix from 'material-ui/internal/ClearFix';
 
 import Header from './common/Header';
+import OptionsPane from './common/OptionsPane';
 
 injectTapEventPlugin();
 
@@ -36,10 +37,15 @@ class App extends React.Component {
         };
 
         this.onOptionsClick = this.onOptionsClick.bind(this);
+        this.onOptionsClose = this.onOptionsClose.bind(this);
     }
 
     onOptionsClick() {
+        this.setState({menuOpened: !this.state.menuOpened});
+    }
 
+    onOptionsClose() {
+        this.setState({menuOpened: false});
     }
 
     render() {
@@ -51,6 +57,7 @@ class App extends React.Component {
                         loading={this.props.loading}
                         onOptionsClick = {this.onOptionsClick}
                     />
+                    <OptionsPane open={this.state.menuOpened} onClose={this.onOptionsClose} />
                     <Paper className="app-content" zDepth={2} rounded={false} >
                         <div>
                         {this.props.children}
