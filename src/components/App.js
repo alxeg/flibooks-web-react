@@ -57,7 +57,9 @@ class App extends React.Component {
                         loading={this.props.loading}
                         onOptionsClick = {this.onOptionsClick}
                     />
-                    <OptionsPane open={this.state.menuOpened} onClose={this.onOptionsClose} />
+                    <OptionsPane
+                        open={this.state.menuOpened}
+                        onClose={this.onOptionsClose} />
                     <Paper className="app-content" zDepth={2} rounded={false} >
                         <div>
                         {this.props.children}
