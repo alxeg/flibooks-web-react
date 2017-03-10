@@ -37,15 +37,15 @@ class App extends React.Component {
         };
 
         this.onOptionsClick = this.onOptionsClick.bind(this);
-        this.onOptionsClose = this.onOptionsClose.bind(this);
+        this.onOptionsChanged = this.onOptionsChanged.bind(this);
     }
 
     onOptionsClick() {
         this.setState({menuOpened: !this.state.menuOpened});
     }
 
-    onOptionsClose() {
-        this.setState({menuOpened: false});
+    onOptionsChanged(open) {
+        this.setState({menuOpened: open});
     }
 
     render() {
@@ -59,7 +59,7 @@ class App extends React.Component {
                     />
                     <OptionsPane
                         open={this.state.menuOpened}
-                        onClose={this.onOptionsClose} />
+                        onChanged={this.onOptionsChanged} />
                     <Paper className="app-content" zDepth={2} rounded={false} >
                         <div>
                         {this.props.children}

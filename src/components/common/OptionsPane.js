@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 
-const OptionsPane = ({open, onClose}) => {
+const OptionsPane = ({open, onChanged}) => {
 
     return (
         <Drawer
@@ -11,7 +11,7 @@ const OptionsPane = ({open, onClose}) => {
             width={300}
             open={open}
             openSecondary
-            onRequestChange={onClose}
+            onRequestChange={onChanged}
         >
             <AppBar title="Options" />
         </Drawer>
@@ -20,7 +20,7 @@ const OptionsPane = ({open, onClose}) => {
 
 OptionsPane.propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    onChanged: PropTypes.func.isRequired
 };
 
 export default OptionsPane;
