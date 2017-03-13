@@ -14,6 +14,10 @@ export function getAuthorBooksSuccess(books) {
     return { type: types.GET_AUTHOR_BOOKS_SUCCESS, books };
 }
 
+export function getLangsSuccess(langs) {
+    return { type: types.GET_BOOKS_LANGS, langs };
+}
+
 export function searchAuthors(term) {
     return function(dispatch) {
         dispatch(beginAjaxCall());
@@ -43,6 +47,18 @@ export function getAuthorBooks(id) {
         dispatch(beginAjaxCall());
         return FlibooksAPI.getAuthorBooks(id).then(books => {
             dispatch(getAuthorBooksSuccess(books));
+        }).catch(error => {
+            dispatch(ajaxCallError(error));
+            throw (error);
+        });
+    };
+}
+
+export function getLangs() {
+    return function(dispatch) {
+        dispatch(beginAjaxCall());
+        return FlibooksAPI.getLangs().then(langs => {
+            dispatch(getLangsSuccess(langs));
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw (error);

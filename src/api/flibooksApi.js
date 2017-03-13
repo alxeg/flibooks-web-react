@@ -44,6 +44,11 @@ class FlibooksAPI {
         return doHttpCall(`/api/author/${id}/books`, 'GET'
             ).then(processResponse);
     }
+
+    static getLangs(id) {
+        return doHttpCall(`/api/book/langs`, 'GET'
+            ).then(processResponse);
+    }
 }
 
 export default FlibooksAPI;
