@@ -24,7 +24,7 @@ export default {
   ],
   module: {
     loaders: [
-      {test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel-loader']},
+      {test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['react-hot-loader', 'babel-loader']},
       {test: /(\.css)$/, loaders: ['style-loader', 'css-loader']},
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
       {test: /\.(woff|woff2)$/, loader: 'url-loader?prefix=font/&limit=5000'},

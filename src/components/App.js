@@ -3,8 +3,6 @@ import React, {PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
 import {deepOrange500, cyan50, cyan600} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -15,7 +13,7 @@ import ClearFix from 'material-ui/internal/ClearFix';
 import Header from './common/Header';
 import OptionsPane from './common/OptionsPane';
 
-injectTapEventPlugin();
+import './RegisterTapEvent';
 
 const muiTheme = getMuiTheme({
   palette: {
