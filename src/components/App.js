@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react';
 
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as flibooksActions from '../actions/flibooksActions';
+
 import { browserHistory } from 'react-router';
 
 import {deepOrange500, cyan50, cyan600} from 'material-ui/styles/colors';
@@ -31,7 +34,8 @@ class App extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            menuOpened: false
+            menuOpened: false,
+            options: {}
         };
 
         this.onOptionsClick = this.onOptionsClick.bind(this);
@@ -39,7 +43,8 @@ class App extends React.Component {
     }
 
     onOptionsClick() {
-        this.setState({menuOpened: !this.state.menuOpened});
+        //this.setState({menuOpened: !this.state.menuOpened});
+        this.props.actions.getLangs();
     }
 
     onOptionsChanged(open) {
@@ -70,6 +75,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+    actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };
@@ -80,4 +86,12 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators(flibooksActions, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+//export default connect(mapStateToProps)(App);

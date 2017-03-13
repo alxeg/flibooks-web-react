@@ -3,5 +3,8 @@ export default {
     authors: {
         term: '',
         authors: []
+    },
+    options: {
+        selectedLangs: []
     }
 };

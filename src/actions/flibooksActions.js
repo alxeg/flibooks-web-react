@@ -15,7 +15,7 @@ export function getAuthorBooksSuccess(books) {
 }
 
 export function getLangsSuccess(langs) {
-    return { type: types.GET_BOOKS_LANGS, langs };
+    return { type: types.GET_LANGS_SUCCESS, langs };
 }
 
 export function searchAuthors(term) {
