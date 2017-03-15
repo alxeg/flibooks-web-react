@@ -35,15 +35,23 @@ class App extends React.Component {
         super(props, context);
         this.state = {
             menuOpened: false,
-            options: {}
         };
 
         this.onOptionsClick = this.onOptionsClick.bind(this);
         this.onOptionsChanged = this.onOptionsChanged.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state.menuOpenRequested && nextProps.options.langs) {
+            this.setState({
+                menuOpened: true,
+                menuOpenRequested: false
+            });
+        }
+    }
+
     onOptionsClick() {
-        //this.setState({menuOpened: !this.state.menuOpened});
+        this.setState({menuOpenRequested: true});
         this.props.actions.getLangs();
     }
 
@@ -62,6 +70,7 @@ class App extends React.Component {
                     />
                     <OptionsPane
                         open={this.state.menuOpened}
+                        options={this.props.options}
                         onChanged={this.onOptionsChanged} />
                     <Paper className="app-content" zDepth={2} rounded={false} >
                         <div>
@@ -77,12 +86,18 @@ class App extends React.Component {
 App.propTypes = {
     actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    options: PropTypes.object.isRequired
+};
+
+App.defaultProps = {
+    menuOpened: false
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        loading: state.ajaxCallsInProgress > 0
+        loading: state.ajaxCallsInProgress > 0,
+        options: state.options,
     };
 };
 

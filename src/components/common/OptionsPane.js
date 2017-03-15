@@ -2,8 +2,11 @@ import React, { Component, PropTypes } from 'react';
 
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
+import Checkbox from 'material-ui/Checkbox';
 
-const OptionsPane = ({open, onChanged}) => {
+import { Grid, Cell } from 'react-flexr';
+
+const OptionsPane = ({open, options, onChanged}) => {
 
     return (
         <Drawer
@@ -14,12 +17,28 @@ const OptionsPane = ({open, onChanged}) => {
             onRequestChange={onChanged}
         >
             <AppBar title="Options" />
+
+            {options.langs &&
+                <Grid>
+                        {Object.keys(options.langs).map( lang => {
+                            return (
+                                <Cell key={lang}>
+                                    <Checkbox
+                                        label={lang}
+                                        defaultChecked={options.langs[lang]}
+                                    />
+                                </Cell>
+                            );
+                        })}
+                </Grid>
+            }
         </Drawer>
     );
 };
 
 OptionsPane.propTypes = {
     open: PropTypes.bool.isRequired,
+    options: PropTypes.object.isRequired,
     onChanged: PropTypes.func.isRequired
 };
 

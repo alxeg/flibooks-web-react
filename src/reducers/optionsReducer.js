@@ -6,7 +6,7 @@ export default function optionsReducer(state = initialState.options, action) {
 
     case types.GET_LANGS_SUCCESS: {
         let langs = action.langs.reduce((result, lang) => {
-            result[lang] = (state.selectedLangs.indexOf(lang) != -1);
+            result[lang] = (state.selectedLangs && state.selectedLangs.indexOf(lang) != -1)? true : false;
             return result;
         }, {});
         return Object.assign({}, state, { langs });
