@@ -18,6 +18,10 @@ export function getLangsSuccess(langs) {
     return { type: types.GET_LANGS_SUCCESS, langs };
 }
 
+export function saveLangsSuccess(selectedLangs) {
+    return { type: types.SAVE_LANGS_SUCCESS, selectedLangs };
+}
+
 export function searchAuthors(term) {
     return function(dispatch) {
         dispatch(beginAjaxCall());
@@ -63,5 +67,11 @@ export function getLangs() {
             dispatch(ajaxCallError(error));
             throw (error);
         });
+    };
+}
+
+export function saveLangs(selectedLangs) {
+    return function(dispatch) {
+        dispatch(saveLangsSuccess(selectedLangs));
     };
 }

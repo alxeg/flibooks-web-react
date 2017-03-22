@@ -5,5 +5,6 @@ export default {
         authors: []
     },
     options: {
+        selectedLangs: []
     }
 };

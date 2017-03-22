@@ -4,10 +4,11 @@ import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { Grid, Cell } from 'react-flexr';
 
-const OptionsPane = ({open, options, onChanged}) => {
+const OptionsPane = ({open, options, onShow, onLangsChanged, onSave}) => {
 
     return (
         <Drawer
@@ -15,7 +16,7 @@ const OptionsPane = ({open, options, onChanged}) => {
             width={300}
             open={open}
             openSecondary
-            onRequestChange={onChanged}
+            onRequestChange={onShow}
         >
             <AppBar title="Options" />
             <Paper zDepth={2} rounded={false} style={{margin: '10px', padding: '5px', height: 'calc(100% - 75px)' }}>
@@ -26,14 +27,23 @@ const OptionsPane = ({open, options, onChanged}) => {
                                     <Cell key={lang} size="1/3">
                                         <Checkbox
                                             style={{padding: '5px'}}
+                                            name={lang}
                                             label={lang}
                                             defaultChecked={options.langs[lang]}
+                                            onCheck={onLangsChanged}
                                         />
                                     </Cell>
                                 );
                             })}
                     </Grid>
                 }
+                    <RaisedButton
+                            primary
+                            label="Save"
+                            style={{width: 200}}
+                            type="submit"
+                            onTouchTap={onSave}
+                    />
             </Paper>
         </Drawer>
     );
@@ -42,7 +52,9 @@ const OptionsPane = ({open, options, onChanged}) => {
 OptionsPane.propTypes = {
     open: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired,
-    onChanged: PropTypes.func.isRequired
+    onShow: PropTypes.func.isRequired,
+    onLangsChanged: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired
 };
 
 export default OptionsPane;

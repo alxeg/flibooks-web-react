@@ -79,6 +79,7 @@ class AuthorsPage extends React.Component {
                             value={this.state.authorsQuery}
                             onChange={this.handleTextFieldChange}
                         />
+
                         <RaisedButton
                             primary
                             label="Search"

@@ -38,7 +38,9 @@ class App extends React.Component {
         };
 
         this.onOptionsClick = this.onOptionsClick.bind(this);
-        this.onOptionsChanged = this.onOptionsChanged.bind(this);
+        this.onOptionsShow = this.onOptionsShow.bind(this);
+        this.onOptionsLangsChanged = this.onOptionsLangsChanged.bind(this);
+        this.onOptionsSave = this.onOptionsSave.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,6 +50,11 @@ class App extends React.Component {
                 menuOpenRequested: false
             });
         }
+        if (nextProps.options.selectedLangs) {
+            this.setState({
+                selectedLangs: new Set(nextProps.options.selectedLangs)
+            });
+        }
     }
 
     onOptionsClick() {
@@ -55,8 +62,25 @@ class App extends React.Component {
         this.props.actions.getLangs();
     }
 
-    onOptionsChanged(open) {
+    onOptionsShow(open) {
         this.setState({menuOpened: open});
+    }
+
+    onOptionsSave() {
+        let langs = [... this.state.selectedLangs];
+        this.props.actions.saveLangs(langs);
+        this.setState({ menuOpened: false });
+    }
+
+    onOptionsLangsChanged(event, checked) {
+        let langs = this.state.selectedLangs;
+        let lang = event.target.name;
+        if (checked) {
+            langs.add(lang);
+        } else {
+            langs.delete(lang);
+        }
+        this.setState({selectedLangs: langs});
     }
 
     render() {
@@ -71,7 +95,11 @@ class App extends React.Component {
                     <OptionsPane
                         open={this.state.menuOpened}
                         options={this.props.options}
-                        onChanged={this.onOptionsChanged} />
+                        onLangsChanged={this.onOptionsLangsChanged}
+                        onShow={this.onOptionsShow}
+                        onSave={this.onOptionsSave}
+                    />
+
                     <Paper className="app-content" zDepth={2} rounded={false} >
                         <div>
                         {this.props.children}
@@ -108,5 +136,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-//export default connect(mapStateToProps)(App);
