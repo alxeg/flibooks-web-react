@@ -40,7 +40,6 @@ class App extends React.Component {
         this.onOptionsClick = this.onOptionsClick.bind(this);
         this.onOptionsShow = this.onOptionsShow.bind(this);
         this.onOptionsLangsChanged = this.onOptionsLangsChanged.bind(this);
-        this.onOptionsSave = this.onOptionsSave.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -66,12 +65,6 @@ class App extends React.Component {
         this.setState({menuOpened: open});
     }
 
-    onOptionsSave() {
-        let langs = [... this.state.selectedLangs];
-        this.props.actions.saveLangs(langs);
-        this.setState({ menuOpened: false });
-    }
-
     onOptionsLangsChanged(event, checked) {
         let langs = this.state.selectedLangs;
         let lang = event.target.name;
@@ -80,7 +73,7 @@ class App extends React.Component {
         } else {
             langs.delete(lang);
         }
-        this.setState({selectedLangs: langs});
+        this.props.actions.saveLangs([... langs]);
     }
 
     render() {

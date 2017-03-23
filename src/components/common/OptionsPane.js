@@ -4,11 +4,10 @@ import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Checkbox from 'material-ui/Checkbox';
 import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import { Grid, Cell } from 'react-flexr';
 
-const OptionsPane = ({open, options, onShow, onLangsChanged, onSave}) => {
+const OptionsPane = ({open, options, onShow, onLangsChanged}) => {
 
     return (
         <Drawer
@@ -37,13 +36,6 @@ const OptionsPane = ({open, options, onShow, onLangsChanged, onSave}) => {
                             })}
                     </Grid>
                 }
-                    <RaisedButton
-                            primary
-                            label="Save"
-                            style={{width: 200}}
-                            type="submit"
-                            onTouchTap={onSave}
-                    />
             </Paper>
         </Drawer>
     );
@@ -53,8 +45,7 @@ OptionsPane.propTypes = {
     open: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired,
     onShow: PropTypes.func.isRequired,
-    onLangsChanged: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired
+    onLangsChanged: PropTypes.func.isRequired
 };
 
 export default OptionsPane;
