@@ -43,15 +43,10 @@ class App extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.menuOpenRequested && nextProps.options.langs) {
+        if (this.state.menuOpenRequested && nextProps.optionsData.langs) {
             this.setState({
                 menuOpened: true,
                 menuOpenRequested: false
-            });
-        }
-        if (nextProps.options.selectedLangs) {
-            this.setState({
-                selectedLangs: new Set(nextProps.options.selectedLangs)
             });
         }
     }
@@ -66,14 +61,14 @@ class App extends React.Component {
     }
 
     onOptionsLangsChanged(event, checked) {
-        let langs = this.state.selectedLangs;
+        let langs = [... this.props.optionsData.selectedLangs];
         let lang = event.target.name;
         if (checked) {
-            langs.add(lang);
+            langs.push(lang);
         } else {
-            langs.delete(lang);
+            langs = langs.filter((item) => item !== lang);
         }
-        this.props.actions.saveLangs([... langs]);
+        this.props.actions.saveLangs(langs);
     }
 
     render() {
@@ -87,7 +82,7 @@ class App extends React.Component {
                     />
                     <OptionsPane
                         open={this.state.menuOpened}
-                        options={this.props.options}
+                        options={this.props.optionsData}
                         onLangsChanged={this.onOptionsLangsChanged}
                         onShow={this.onOptionsShow}
                         onSave={this.onOptionsSave}
@@ -108,7 +103,7 @@ App.propTypes = {
     actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired
+    optionsData: PropTypes.object.isRequired
 };
 
 App.defaultProps = {
@@ -116,9 +111,20 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+    let langs = {};
+    if (state.options) {
+        let selected = state.options.selectedLangs;
+        langs = state.options.langs.reduce((result, lang) => {
+            result[lang] = (selected && selected.indexOf(lang) != -1)? true : false;
+            return result;
+        }, {});
+    }
     return {
         loading: state.ajaxCallsInProgress > 0,
-        options: state.options,
+        optionsData: {
+            selectedLangs: state.options.selectedLangs,
+            langs
+        }
     };
 };
 

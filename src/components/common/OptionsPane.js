@@ -28,7 +28,7 @@ const OptionsPane = ({open, options, onShow, onLangsChanged}) => {
                                             style={{padding: '5px'}}
                                             name={lang}
                                             label={lang}
-                                            defaultChecked={options.langs[lang]}
+                                            checked={options.langs[lang]}
                                             onCheck={onLangsChanged}
                                         />
                                     </Cell>
