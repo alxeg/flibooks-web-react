@@ -8,8 +8,12 @@ export default function optionsReducer(state = initialState.options, action) {
         return Object.assign({}, state, { langs: action.langs });
     }
 
-    case types.SAVE_LANGS_SUCCESS: {
+    case types.SAVE_SELECTED_LANGS_DONE: {
         return Object.assign({}, state, { selectedLangs: action.selectedLangs });
+    }
+
+    case types.GET_SELECTED_LANGS_DONE: {
+        return state;
     }
 
     default:

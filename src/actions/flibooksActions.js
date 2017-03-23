@@ -18,12 +18,16 @@ export function getLangsSuccess(langs) {
     return { type: types.GET_LANGS_SUCCESS, langs };
 }
 
-export function saveLangsSuccess(selectedLangs) {
-    return { type: types.SAVE_LANGS_SUCCESS, selectedLangs };
+export function saveSelectedLangsSuccess(selectedLangs) {
+    return { type: types.SAVE_SELECTED_LANGS_DONE, selectedLangs };
+}
+
+export function getSelectedLangsSuccess() {
+    return { type: types.GET_SELECTED_LANGS_DONE };
 }
 
 export function searchAuthors(term) {
-    return function(dispatch) {
+    return (dispatch) => {
         dispatch(beginAjaxCall());
         return FlibooksAPI.searchForAuthors(term).then(authors => {
             dispatch(searchAuthorsSuccess(term, authors));
@@ -35,7 +39,7 @@ export function searchAuthors(term) {
 }
 
 export function getAuthor(id) {
-    return function(dispatch) {
+    return (dispatch) => {
         dispatch(beginAjaxCall());
         return FlibooksAPI.getAuthor(id).then(author => {
             dispatch(getAuthorSuccess(author));
@@ -47,7 +51,7 @@ export function getAuthor(id) {
 }
 
 export function getAuthorBooks(id) {
-    return function(dispatch) {
+    return (dispatch) => {
         dispatch(beginAjaxCall());
         return FlibooksAPI.getAuthorBooks(id).then(books => {
             dispatch(getAuthorBooksSuccess(books));
@@ -59,7 +63,7 @@ export function getAuthorBooks(id) {
 }
 
 export function getLangs() {
-    return function(dispatch) {
+    return (dispatch) => {
         dispatch(beginAjaxCall());
         return FlibooksAPI.getLangs().then(langs => {
             dispatch(getLangsSuccess(langs));
@@ -69,9 +73,14 @@ export function getLangs() {
         });
     };
 }
+export function getSelectedLangs() {
+    return (dispatch) => {
+        dispatch(getSelectedLangsSuccess());
+    };
+}
 
-export function saveLangs(selectedLangs) {
-    return function(dispatch) {
-        dispatch(saveLangsSuccess(selectedLangs));
+export function saveSelectedLangs(selectedLangs) {
+    return (dispatch) => {
+        dispatch(saveSelectedLangsSuccess(selectedLangs));
     };
 }

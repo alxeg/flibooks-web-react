@@ -68,7 +68,7 @@ class App extends React.Component {
         } else {
             langs = langs.filter((item) => item !== lang);
         }
-        this.props.actions.saveLangs(langs);
+        this.props.actions.saveSelectedLangs(langs);
     }
 
     render() {
