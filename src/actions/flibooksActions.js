@@ -26,6 +26,10 @@ export function getSelectedLangsSuccess() {
     return { type: types.GET_SELECTED_LANGS_DONE };
 }
 
+export function searchBooksSuccess(title, author, books) {
+    return { type: types.SEARCH_BOOKS_SUCCESS, books: {title, author, books} };
+}
+
 export function searchAuthors(term) {
     return (dispatch) => {
         dispatch(beginAjaxCall());
@@ -53,8 +57,23 @@ export function getAuthor(id) {
 export function getAuthorBooks(id) {
     return (dispatch) => {
         dispatch(beginAjaxCall());
+
         return FlibooksAPI.getAuthorBooks(id).then(books => {
             dispatch(getAuthorBooksSuccess(books));
+        }).catch(error => {
+            dispatch(ajaxCallError(error));
+            throw (error);
+        });
+    };
+}
+
+export function searchBooks(title, author) {
+    return (dispatch, getState) => {
+        dispatch(beginAjaxCall());
+
+        const langs = getState().options.selectedLangs;
+        return FlibooksAPI.searchForBooks(title, author, 20, undefined, langs).then(books => {
+            dispatch(searchAuthorsSuccess(title, author, books));
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw (error);
@@ -74,7 +93,7 @@ export function getLangs() {
     };
 }
 export function getSelectedLangs() {
-    return (dispatch) => {
+    return dispatch => {
         dispatch(getSelectedLangsSuccess());
     };
 }
