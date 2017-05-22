@@ -112,7 +112,7 @@ App.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
     let langs = {};
-    if (state.options) {
+    if (state.options && Array.isArray(state.options.langs)) {
         let selected = state.options.selectedLangs;
         langs = state.options.langs.reduce((result, lang) => {
             result[lang] = (selected && selected.indexOf(lang) != -1)? true : false;

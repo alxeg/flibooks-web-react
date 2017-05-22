@@ -73,7 +73,7 @@ export function searchBooks(title, author) {
 
         const langs = getState().options.selectedLangs;
         return FlibooksAPI.searchForBooks(title, author, 20, undefined, langs).then(books => {
-            dispatch(searchAuthorsSuccess(title, author, books));
+            dispatch(searchBooksSuccess(title, author, books));
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw (error);

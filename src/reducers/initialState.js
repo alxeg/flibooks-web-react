@@ -4,6 +4,11 @@ export default {
         term: '',
         authors: []
     },
+    books: {
+        author: '',
+        title: '',
+        books: []
+    },
     options: {
         selectedLangs: [],
         langs: []

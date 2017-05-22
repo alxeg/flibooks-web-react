@@ -22,7 +22,7 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
 
     const getHighlight = (termsString) => {
         if (termsString) {
-            return new RegExp(termsString.split(/\s/).map(term => "("+term+")").join("|"));
+            return new RegExp(termsString.split(/\s/).map(term => "("+term+")").join("|"), 'i');
         } else {
             return "";
         }
