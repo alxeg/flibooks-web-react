@@ -24,7 +24,7 @@ class AuthorBooksPage extends Component {
 
     componentWillMount() {
         const author = this.props.author;
-        const authorId = this.props.params.id;
+        const authorId = this.props.match.params.id;
         if ( !this.props.author )  {
             this.props.actions.getAuthor(authorId);
             this.props.actions.getAuthorBooks(authorId);
@@ -56,13 +56,13 @@ class AuthorBooksPage extends Component {
                         {author.books &&
                             <List>
                                 {author.books.map(book =>
-                                    <BookRow
+                                    (<BookRow
                                         key={book.ID}
                                         book={book}
                                         showAuthor={false}
                                         onBookClick={this.handleBookClick}
                                         onDownloadClick={() => this.handleDownloadClick(book)}
-                                    />
+                                    />)
                                 )}
                             </List>
                         }
@@ -84,7 +84,8 @@ class AuthorBooksPage extends Component {
 AuthorBooksPage.propTypes = {
     actions: PropTypes.object.isRequired,
     author: PropTypes.object,
-    params: PropTypes.object
+    params: PropTypes.object,
+    match:  PropTypes.object
 };
 
 const getAuthorById = (id, authors) => {
@@ -96,7 +97,7 @@ const getAuthorById = (id, authors) => {
 const mapStateToProps = (state, ownProps) => {
     let author = undefined;
 
-    const authorId = ownProps.params.id;
+    const authorId = ownProps.match.params.id;
     if (state.authors.author && state.authors.author.ID == authorId) {
         author = state.authors.author;
     }

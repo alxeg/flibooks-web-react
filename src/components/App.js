@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../actions/flibooksActions';
 
-import { browserHistory } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 
 import {deepOrange500, cyan50, cyan600} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -16,6 +16,11 @@ import ClearFix from 'material-ui/internal/ClearFix';
 
 import Header from './common/Header';
 import OptionsPane from './common/OptionsPane';
+
+import HomePage from './home/HomePage';
+import AuthorsPage from './authors/AuthorsPage';
+import AuthorBooksPage from './authors/AuthorBooksPage';
+import BooksPage from './books/BooksPage';
 
 import './RegisterTapEvent';
 
@@ -90,19 +95,20 @@ class App extends React.Component {
                     />
 
                     <Paper className="app-content" zDepth={2} rounded={false} >
-                        <div>
-                        {this.props.children}
-                        </div>
+                        <Switch>
+                            <Route exact path="/authors" component={AuthorsPage} />
+                            <Route exact path="/authors/:id" component={AuthorBooksPage} />
+                            <Route exact path="/books" component={BooksPage} />
+                            <Route exact path="/" component={HomePage} />
+                        </Switch>
                     </Paper>
                 </div>
             </MuiThemeProvider>
         );
     }
 }
-
 App.propTypes = {
     actions: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     optionsData: PropTypes.object.isRequired
 };

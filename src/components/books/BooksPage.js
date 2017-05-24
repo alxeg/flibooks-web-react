@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
@@ -104,7 +103,7 @@ class BooksPage extends React.Component {
                 {this.props.books &&
                     <List>
                         {this.props.books.map(book =>
-                            <BookRow
+                            (<BookRow
                                 key={book.ID}
                                 book={book}
                                 showAuthor
@@ -112,7 +111,7 @@ class BooksPage extends React.Component {
                                 onDownloadClick={() => this.handleDownloadClick(book)}
                                 highlightTitle={this.state.title}
                                 highlightAuthor={this.state.author}
-                            />
+                            />)
                         )}
                     </List>
                 }

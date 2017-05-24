@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -9,7 +9,7 @@ import ActionBook from 'material-ui/svg-icons/action/book';
 import SocialPeople from 'material-ui/svg-icons/social/people';
 import AvLibraryBooks from 'material-ui/svg-icons/av/library-books';
 
-const NavigationBar = () => {
+const NavigationBar = ({history}) => {
 
     const menuItems = [
         {
@@ -30,7 +30,7 @@ const NavigationBar = () => {
     ];
 
     const handleActive = (tab) => {
-        browserHistory.push(tab.props['value']);
+        history.push(tab.props['value']);
     };
 
     const getSelectionIndex = () => {
@@ -56,6 +56,7 @@ const NavigationBar = () => {
 };
 
 NavigationBar.propTypes = {
+    history: PropTypes.object
 };
 
-export default NavigationBar;
+export default withRouter(NavigationBar);

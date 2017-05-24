@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import AppBar from 'material-ui/AppBar';
 import LinearProgress from 'material-ui/LinearProgress';
@@ -14,9 +14,9 @@ import ActionHome from 'material-ui/svg-icons/action/home';
 import NavigationBar from './NavigationBar';
 
 
-const Header = ({loading, onOptionsClick, style}) => {
+const Header = ({loading, onOptionsClick, style, history}) => {
     const goHome = () => {
-        browserHistory.push("/");
+        history.push("/");
     };
 
     return(
@@ -53,7 +53,9 @@ const Header = ({loading, onOptionsClick, style}) => {
 Header.propTypes = {
     loading: PropTypes.bool.isRequired,
     onOptionsClick: PropTypes.func.isRequired,
-    style: PropTypes.object
+    style: PropTypes.object,
+    history: PropTypes.object
+
 };
 
 export default Header;

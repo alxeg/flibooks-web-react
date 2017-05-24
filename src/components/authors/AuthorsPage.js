@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -48,7 +48,7 @@ class AuthorsPage extends React.Component {
     }
 
     handleAuthorClick(author) {
-        browserHistory.push(`/authors/${author.ID}`);
+        this.props.history.push(`/authors/${author.ID}`);
     }
 
     handleSearchSubmit(event) {
@@ -91,7 +91,7 @@ class AuthorsPage extends React.Component {
                 </form>
                 <List>
                     {this.props.authors.map(author =>
-                        <ListItem
+                        (<ListItem
                             key={author.ID}
                             className="author-line"
                             primaryText={<Highlight matchClass="highlighted" search={this.state.authorsQuery}>{BookUtils.stripSymbols(author.name)}</Highlight>}
@@ -104,7 +104,7 @@ class AuthorsPage extends React.Component {
                                     />
                             }
                             onClick={this.handleAuthorClick.bind(this, author)}
-                            />
+                            />)
                     )}
                 </List>
             </div>
@@ -115,7 +115,9 @@ class AuthorsPage extends React.Component {
 AuthorsPage.propTypes = {
     actions: PropTypes.object.isRequired,
     authorsQuery: PropTypes.string,
-    authors: PropTypes.array
+    authors: PropTypes.array,
+    history: PropTypes.object
+
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -135,5 +137,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthorsPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthorsPage));
 
