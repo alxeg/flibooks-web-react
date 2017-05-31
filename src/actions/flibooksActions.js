@@ -22,8 +22,12 @@ export function saveSelectedLangsSuccess(selectedLangs) {
     return { type: types.SAVE_SELECTED_LANGS_DONE, selectedLangs };
 }
 
-export function getSelectedLangsSuccess() {
-    return { type: types.GET_SELECTED_LANGS_DONE };
+export function saveNoDeletedSuccess(noDeleted) {
+    return { type: types.SAVE_NO_DELETED_DONE, noDeleted };
+}
+
+export function getOptionsSuccess() {
+    return { type: types.GET_OPTIONS_DONE };
 }
 
 export function searchBooksSuccess(title, author, books) {
@@ -55,10 +59,12 @@ export function getAuthor(id) {
 }
 
 export function getAuthorBooks(id) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         dispatch(beginAjaxCall());
 
-        return FlibooksAPI.getAuthorBooks(id).then(books => {
+        const langs = getState().options.selectedLangs;
+        const deleted = !getState().options.noDeleted;
+        return FlibooksAPI.getAuthorBooks(id, deleted, langs).then(books => {
             dispatch(getAuthorBooksSuccess(books));
         }).catch(error => {
             dispatch(ajaxCallError(error));
@@ -72,7 +78,8 @@ export function searchBooks(title, author) {
         dispatch(beginAjaxCall());
 
         const langs = getState().options.selectedLangs;
-        return FlibooksAPI.searchForBooks(title, author, 20, undefined, langs).then(books => {
+        const deleted = !getState().options.noDeleted;
+        return FlibooksAPI.searchForBooks(title, author, 20, deleted, langs).then(books => {
             dispatch(searchBooksSuccess(title, author, books));
         }).catch(error => {
             dispatch(ajaxCallError(error));
@@ -92,9 +99,9 @@ export function getLangs() {
         });
     };
 }
-export function getSelectedLangs() {
+export function getOptions() {
     return dispatch => {
-        dispatch(getSelectedLangsSuccess());
+        dispatch(getOptionsSuccess());
     };
 }
 
@@ -103,3 +110,10 @@ export function saveSelectedLangs(selectedLangs) {
         dispatch(saveSelectedLangsSuccess(selectedLangs));
     };
 }
+
+export function saveNoDeleted(noDeleted) {
+    return (dispatch) => {
+        dispatch(saveNoDeletedSuccess(noDeleted));
+    };
+}
+

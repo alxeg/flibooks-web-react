@@ -40,9 +40,11 @@ class FlibooksAPI {
             ).then(processResponse);
     }
 
-    static getAuthorBooks(id) {
-        return doHttpCall(`/api/author/${id}/books`, 'GET'
-            ).then(processResponse);
+    static getAuthorBooks(id, deleted, langs) {
+        return doHttpCall(`/api/author/${id}/books?no-details=true`, 'POST', {
+                deleted,
+                langs
+            }).then(processResponse);
     }
 
     static searchForBooks(title, author, limit = 20, deleted, langs) {

@@ -46,6 +46,11 @@ class App extends React.Component {
         this.onOptionsClick = this.onOptionsClick.bind(this);
         this.onOptionsShow = this.onOptionsShow.bind(this);
         this.onOptionsLangsChanged = this.onOptionsLangsChanged.bind(this);
+        this.onOptionsNoDeletedChanged = this.onOptionsNoDeletedChanged.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.actions.getOptions();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -64,6 +69,11 @@ class App extends React.Component {
 
     onOptionsShow(open) {
         this.setState({menuOpened: open});
+    }
+
+    onOptionsNoDeletedChanged(event, checked) {
+        this.props.actions.saveNoDeleted(checked);
+
     }
 
     onOptionsLangsChanged(event, checked) {
@@ -90,8 +100,8 @@ class App extends React.Component {
                         open={this.state.menuOpened}
                         options={this.props.optionsData}
                         onLangsChanged={this.onOptionsLangsChanged}
+                        onNoDeletedChanged={this.onOptionsNoDeletedChanged}
                         onShow={this.onOptionsShow}
-                        onSave={this.onOptionsSave}
                     />
 
                     <Paper className="app-content" zDepth={2} rounded={false} >
@@ -119,18 +129,23 @@ App.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
     let langs = {};
-    if (state.options && Array.isArray(state.options.langs)) {
-        let selected = state.options.selectedLangs;
-        langs = state.options.langs.reduce((result, lang) => {
-            result[lang] = (selected && selected.indexOf(lang) != -1)? true : false;
-            return result;
-        }, {});
+    let noDeleted = false;
+    if (state.options) {
+        noDeleted = state.options.noDeleted==true;
+        if (Array.isArray(state.options.langs)) {
+            let selected = state.options.selectedLangs;
+            langs = state.options.langs.reduce((result, lang) => {
+                result[lang] = (selected && selected.indexOf(lang) != -1)? true : false;
+                return result;
+            }, {});
+        }
     }
     return {
         loading: state.ajaxCallsInProgress > 0,
         optionsData: {
             selectedLangs: state.options.selectedLangs,
-            langs
+            langs,
+            noDeleted
         }
     };
 };
