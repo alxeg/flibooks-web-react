@@ -20,7 +20,7 @@ const OptionsPane = ({open, options, onShow, onLangsChanged, onNoDeletedChanged}
             onRequestChange={onShow}
         >
             <AppBar title="Options" />
-            <Paper zDepth={2} rounded={false} style={{margin: '10px', padding: '5px', height: 'calc(100% - 75px)' }}>
+            <Paper zDepth={2} rounded={false} className="options-content">
                 <Checkbox
                     style={{padding: '10px'}}
                     name="noDeleted"

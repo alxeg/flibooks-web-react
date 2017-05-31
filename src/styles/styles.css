@@ -29,6 +29,13 @@ app-header {
     overflow: auto;
 }
 
+.options-content {
+    margin: 10px;
+    padding: 20px;
+    height: calc(100% - 75px);
+    overflow: auto;
+}
+
 .toast-message {
     position: fixed;
     bottom: 25px;
