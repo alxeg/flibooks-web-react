@@ -104,3 +104,23 @@ app-header {
     font-weight: bold;
     text-align: right;
 }
+.description-authors {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.description-title {
+    font-weight: bold;
+    font-size: 95%;
+    text-transform: uppercase;
+}
+
+.description-series {
+    font-style: italic;
+    font-size: 95%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #808080;
+}

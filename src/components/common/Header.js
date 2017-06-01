@@ -22,7 +22,7 @@ const Header = ({loading, onOptionsClick, onIdSearchClick, style, history}) => {
     return(
         <div style={style} >
             <AppBar
-                title="Flibooks Web Application"
+                title="Flibooks Backup"
                 zDepth={0}
                 iconElementLeft={
                     <IconButton onClick={goHome}>

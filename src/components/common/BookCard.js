@@ -12,15 +12,34 @@ const BookCard = ({book, onDownloadAction}) => {
     return (
         <Card>
             <CardHeader
-                title={book.title}
-                subtitle={BookUtils.getBookAuthors(book)} />
-            <CardText>
+                title={<div className="description-authors">{BookUtils.getBookAuthors(book)}</div>}/>
+            <CardText style={{marginTop: '-20px'}}>
+                <div className="description-title">{book.title}</div>
+                {book.series &&
+                    <div className="description-series">
+                        &laquo;
+                            {book.series}
+                            {book.ser_no &&
+                                <span>&nbsp;[{book.ser_no}]</span>
+                            }
+                        &raquo;
+                    </div>
+                }
                 <Divider />
                 <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end', width: '100%', paddingTop: '10px'}}>
                     <span className="description-size" style={{flex: 1}}>{formattedSize}</span>
                     <span className="description-lang" style={{flex: 1}}>{book.lang}</span>
                 </div>
-                <div className="description-link"><a target="_blank"  href={descriptionLink}>Open Description</a></div>
+                <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end', width: '100%', paddingTop: '10px'}}>
+                    <span className="description-genres" style={{flex: 1}}>
+                        {book.genres && book.genres.map(genre =>
+                            (<span key={genre.genre_code}>{genre.genre_code}&nbsp;</span>)
+                        )}
+                    </span>
+                    <span className="description-size" style={{flex: 1}}>
+                        <div className="description-link"><a target="_blank"  href={descriptionLink}>Open Description</a></div>
+                    </span>
+                </div>
             </CardText>
             <CardActions>
                 <FlatButton
