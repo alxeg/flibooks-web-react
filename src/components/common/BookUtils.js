@@ -10,6 +10,10 @@ class BookUtils {
     static stripSymbols(str) {
         return str.replace(/^[, ]*(.*?)[ ,]*$/, "$1");
     }
+
+    static formatSize(size) {
+        return new Intl.NumberFormat().format(size);
+    }
 }
 
 export default BookUtils;

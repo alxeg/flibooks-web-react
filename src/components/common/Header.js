@@ -14,7 +14,7 @@ import ActionHome from 'material-ui/svg-icons/action/home';
 import NavigationBar from './NavigationBar';
 
 
-const Header = ({loading, onOptionsClick, style, history}) => {
+const Header = ({loading, onOptionsClick, onIdSearchClick, style, history}) => {
     const goHome = () => {
         history.push("/");
     };
@@ -39,6 +39,9 @@ const Header = ({loading, onOptionsClick, style, history}) => {
                     >
                             <MenuItem primaryText="Options"
                                 onClick={onOptionsClick} />
+                            <MenuItem primaryText="ID Search"
+                                onClick={onIdSearchClick} />
+
                     </IconMenu>
                 }
             />
@@ -53,6 +56,7 @@ const Header = ({loading, onOptionsClick, style, history}) => {
 Header.propTypes = {
     loading: PropTypes.bool.isRequired,
     onOptionsClick: PropTypes.func.isRequired,
+    onIdSearchClick: PropTypes.func,
     style: PropTypes.object,
     history: PropTypes.object
 

@@ -43,6 +43,8 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
         }
     };
 
+    const formattedSize = BookUtils.formatSize(book.file_size);
+
     return (
         <div className="book-line">
             <ListItem onClick={handleItemClick}
@@ -57,7 +59,7 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
                     <IconButton
                         iconStyle={{width: 40, height: 40, padding: 0}}
                         onClick={handleDownloadClick}
-                        tooltip="Download">
+                        tooltip={formattedSize}>
                             <FileFileDownload className="book-row-download-icon" color={cyan500}  />
                     </IconButton>
                 }

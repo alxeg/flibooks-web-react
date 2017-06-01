@@ -82,3 +82,25 @@ app-header {
     margin-left: -20px;
     margin-top: -20px;
 }
+
+.description-link {
+    padding-top: 10px;
+    position: absolute;
+    right: 0px;
+    width: 160px;
+}
+.description-link a {
+    color: #00BCD4;
+    font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.description-size {
+    font-weight: bold;
+}
+
+.description-lang {
+    font-weight: bold;
+    text-align: right;
+}

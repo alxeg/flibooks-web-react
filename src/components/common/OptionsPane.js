@@ -30,7 +30,7 @@ const OptionsPane = ({open, options, onShow, onLangsChanged, onNoDeletedChanged}
                 <Divider />
 
                 {options.langs &&
-                    <Grid align="center">
+                    <Grid align="center" style={{marginTop: '10px'}}>
                             {Object.keys(options.langs).map( lang => {
                                 return (
                                     <Cell key={lang} size="1/3">
