@@ -17,12 +17,12 @@ const BookCard = ({book, onDownloadAction}) => {
                 <div className="description-title">{book.title}</div>
                 {book.series &&
                     <div className="description-series">
-                        &laquo;
+                        «
                             {book.series}
                             {book.ser_no &&
                                 <span>&nbsp;[{book.ser_no}]</span>
                             }
-                        &raquo;
+                        »
                     </div>
                 }
                 <Divider />
@@ -33,7 +33,7 @@ const BookCard = ({book, onDownloadAction}) => {
                 <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end', width: '100%', paddingTop: '10px'}}>
                     <span className="description-genres" style={{flex: 1}}>
                         {book.genres && book.genres.map(genre =>
-                            (<span key={genre.genre_code}>{genre.genre_code}&nbsp;</span>)
+                            (<span key={genre.genre_code}>{genre.genre_code} </span>)
                         )}
                     </span>
                     <span className="description-size" style={{flex: 1}}>
