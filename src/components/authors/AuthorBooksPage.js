@@ -60,7 +60,6 @@ class AuthorBooksPage extends Component {
         });
     }
 
-
     handleDownloadClick(book) {
         this.setState({downloadLink: `/api/book/${book.ID}/download`});
         // iframe's onload does not work, so reset link with timeout

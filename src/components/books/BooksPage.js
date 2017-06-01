@@ -23,7 +23,8 @@ class BooksPage extends React.Component {
             title: props.title,
             author: props.author,
             books: [],
-            detailsShown: false
+            detailsShown: false,
+            detailsRequested: false
         };
 
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
@@ -33,6 +34,16 @@ class BooksPage extends React.Component {
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
 
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.state.detailsRequested && nextProps.book) {
+            this.setState({
+                detailsShown: true,
+                detailsRequested: false
+            });
+        }
+    }
+
 
     handleTextFieldChange(e) {
         let newState = {};
@@ -51,7 +62,13 @@ class BooksPage extends React.Component {
     }
 
     handleBookClick(book) {
-        this.setState({detailsShown: true, book});
+        this.setState({detailsRequested: true});
+        this.props.actions.getBook(book.ID)
+            .catch(error => {
+                error.then(message => {
+                    this.showError(message);
+                });
+            });
     }
 
     handleDownloadClick(book) {
@@ -117,7 +134,7 @@ class BooksPage extends React.Component {
                 }
                 <BookDetailsDialog
                     open={this.state.detailsShown}
-                    book={this.state.book}
+                    book={this.props.book}
                     onCloseAction={() => this.setState({detailsShown: false})}
                     onDownloadAction={this.handleDownloadClick}
                 />
@@ -132,7 +149,8 @@ BooksPage.propTypes = {
     actions: PropTypes.object.isRequired,
     title: PropTypes.string,
     author: PropTypes.string,
-    books: PropTypes.array
+    books: PropTypes.array,
+    book: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -140,11 +158,16 @@ const mapStateToProps = (state, ownProps) => {
     const books =  state.books && Array.isArray(state.books.books) ? state.books.books : [];
     const title = state.books ? state.books.title : '';
     const author = state.books ? state.books.author : '';
+    let book = undefined;
+    if (state.bookInfo) {
+        book = state.bookInfo.book;
+    }
 
     return {
         books,
         title,
-        author
+        author,
+        book
     };
 };
 
