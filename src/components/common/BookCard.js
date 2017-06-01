@@ -17,7 +17,7 @@ const BookCard = ({book, onDownloadAction}) => {
                 <div className="description-title">{book.title}</div>
                 {book.series &&
                     <div className="description-series">
-                        «{book.series}{book.ser_no && <span>{' '}[{book.ser_no}]</span>}»
+                    {'"'}{book.series}{book.ser_no && <span>{' '}[{book.ser_no}]</span>}{'"'}
                     </div>
                 }
                 <Divider />
