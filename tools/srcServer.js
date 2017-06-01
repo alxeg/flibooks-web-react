@@ -13,6 +13,7 @@ const compiler = webpack(config);
 
 const proxyTo = 'http://localhost:8000';
 // const proxyTo = 'http://192.168.13.33:8000';
+// const proxyTo = 'http://10.100.2.5:8000';
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,

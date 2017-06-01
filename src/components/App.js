@@ -21,6 +21,8 @@ import HomePage from './home/HomePage';
 import AuthorsPage from './authors/AuthorsPage';
 import AuthorBooksPage from './authors/AuthorBooksPage';
 import BooksPage from './books/BooksPage';
+import LibraryPage from './books/LibraryPage';
+import SeriesPage from './books/SeriesPage';
 
 import './RegisterTapEvent';
 
@@ -109,6 +111,8 @@ class App extends React.Component {
                             <Route exact path="/authors" component={AuthorsPage} />
                             <Route exact path="/authors/:id" component={AuthorBooksPage} />
                             <Route exact path="/books" component={BooksPage} />
+                            <Route exact path="/library" component={LibraryPage} />
+                            <Route exact path="/series" component={SeriesPage} />
                             <Route exact path="/" component={HomePage} />
                         </Switch>
                     </Paper>

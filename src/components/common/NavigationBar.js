@@ -23,9 +23,9 @@ const NavigationBar = ({history}) => {
             title: "BOOKS"
         },
         {
-            path: "/library",
+            path: "/series",
             icon: <ActionBook />,
-            title: "LIBRARY"
+            title: "SERIES"
         }
     ];
 
