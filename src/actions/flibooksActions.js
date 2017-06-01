@@ -34,6 +34,10 @@ export function searchBooksSuccess(title, author, books) {
     return { type: types.SEARCH_BOOKS_SUCCESS, books: {title, author, books} };
 }
 
+export function getBooksSuccess(book) {
+    return { type: types.GET_BOOK_SUCCESS, book};
+}
+
 export function searchAuthors(term) {
     return (dispatch) => {
         dispatch(beginAjaxCall());
@@ -81,6 +85,19 @@ export function searchBooks(title, author) {
         const deleted = !getState().options.noDeleted;
         return FlibooksAPI.searchForBooks(title, author, 20, deleted, langs).then(books => {
             dispatch(searchBooksSuccess(title, author, books));
+        }).catch(error => {
+            dispatch(ajaxCallError(error));
+            throw (error);
+        });
+    };
+}
+
+export function getBook(id) {
+    return (dispatch) => {
+        dispatch(beginAjaxCall());
+
+        return FlibooksAPI.getBook(id).then(book => {
+            dispatch(getBooksSuccess(book));
         }).catch(error => {
             dispatch(ajaxCallError(error));
             throw (error);

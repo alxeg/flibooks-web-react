@@ -9,6 +9,7 @@ import {List, ListItem} from 'material-ui/List';
 import BookRow from '../common/BookRow';
 import BookUtils from '../common/BookUtils';
 import BookDetailsDialog from '../common/BookDetailsDialog';
+import toast from 'toast.js';
 
 class AuthorBooksPage extends Component {
     constructor(props, context) {
@@ -18,7 +19,8 @@ class AuthorBooksPage extends Component {
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
 
         this.state = {
-            detailsShown: false
+            detailsShown: false,
+            detailsRequested: false
         };
     }
 
@@ -33,10 +35,31 @@ class AuthorBooksPage extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state.detailsRequested && nextProps.book) {
+            this.setState({
+                detailsShown: true,
+                detailsRequested: false
+            });
+        }
+    }
 
     handleBookClick(book) {
-        this.setState({detailsShown: true, book});
+        this.setState({detailsRequested: true});
+        this.props.actions.getBook(book.ID)
+            .catch(error => {
+                error.then(message => {
+                    this.showError(message);
+                });
+            });
     }
+
+    showError(message) {
+        toast.error({
+            message
+        });
+    }
+
 
     handleDownloadClick(book) {
         this.setState({downloadLink: `/api/book/${book.ID}/download`});
@@ -71,7 +94,7 @@ class AuthorBooksPage extends Component {
                 }
                 <BookDetailsDialog
                     open={this.state.detailsShown}
-                    book={this.state.book}
+                    book={this.props.book}
                     onCloseAction={() => this.setState({detailsShown: false})}
                     onDownloadAction={this.handleDownloadClick}
                 />
@@ -85,7 +108,8 @@ AuthorBooksPage.propTypes = {
     actions: PropTypes.object.isRequired,
     author: PropTypes.object,
     params: PropTypes.object,
-    match:  PropTypes.object
+    match:  PropTypes.object,
+    book: PropTypes.object
 };
 
 const getAuthorById = (id, authors) => {
@@ -96,14 +120,20 @@ const getAuthorById = (id, authors) => {
 
 const mapStateToProps = (state, ownProps) => {
     let author = undefined;
+    let book = undefined;
 
     const authorId = ownProps.match.params.id;
     if (state.authors.author && state.authors.author.ID == authorId) {
         author = state.authors.author;
     }
 
+    if (state.bookInfo) {
+        book = state.bookInfo.book;
+    }
+
     return {
-        author
+        author,
+        book
     };
 };
 

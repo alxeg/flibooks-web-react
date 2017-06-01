@@ -9,6 +9,8 @@ export default {
         title: '',
         books: []
     },
+    bookInfo: {
+    },
     options: {
         selectedLangs: [],
         langs: []
