@@ -20,7 +20,7 @@ const BookCard = ({book, onDownloadAction}) => {
                         «
                             {book.series}
                             {book.ser_no &&
-                                <span>&nbsp;[{book.ser_no}]</span>
+                                <span>{' '}[{book.ser_no}]</span>
                             }
                         »
                     </div>
