@@ -38,6 +38,10 @@ export function getBooksSuccess(book) {
     return { type: types.GET_BOOK_SUCCESS, book};
 }
 
+export function searchBooksByIdSuccess(idBooks) {
+    return { type: types.SEARCH_BOOKS_BY_ID_SUCCESS, books: {idBooks}};
+}
+
 export function searchAuthors(term) {
     return (dispatch) => {
         dispatch(beginAjaxCall());
@@ -90,6 +94,20 @@ export function searchBooks(title, author) {
             throw (error);
         });
     };
+}
+
+export function searchBooksById(id) {
+    return (dispatch) => {
+        dispatch(beginAjaxCall());
+
+        return FlibooksAPI.getBooksById(id).then(books => {
+            dispatch(searchBooksByIdSuccess(books));
+        }).catch(error => {
+            dispatch(ajaxCallError(error));
+            throw (error);
+        });
+    };
+
 }
 
 export function getBook(id) {

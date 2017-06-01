@@ -6,6 +6,10 @@ export default function authorsReducer(state = initialState.books, action) {
     case types.SEARCH_BOOKS_SUCCESS:
       return Object.assign({}, state, action.books);
 
+    case types.SEARCH_BOOKS_BY_ID_SUCCESS:
+      return Object.assign({}, state, action.books);
+
+
     default:
       return state;
   }

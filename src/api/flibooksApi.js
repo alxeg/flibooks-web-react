@@ -62,6 +62,11 @@ class FlibooksAPI {
             ).then(processResponse);
     }
 
+    static getBooksById(libId) {
+        return doHttpCall(`/api/book/lib/${libId}`, 'GET'
+            ).then(processResponse);
+    }
+
     static getLangs(id) {
         return doHttpCall(`/api/book/langs`, 'GET'
             ).then(processResponse);
