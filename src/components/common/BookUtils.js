@@ -4,7 +4,7 @@ class BookUtils {
     }
 
     static getBookSeries(book) {
-        return book.series ? book.series + ' [' + book.ser_no + ']' : ' ';
+        return book.series ? book.series + (book.ser_no && book.ser_no!=='0'? '[' + book.ser_no + ']' : ' ') : ' ';
     }
 
     static stripSymbols(str) {

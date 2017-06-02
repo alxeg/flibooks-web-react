@@ -57,6 +57,16 @@ class FlibooksAPI {
         }).then(processResponse);
     }
 
+    static searchForBooksSeries(title, series, limit = 20, deleted, langs) {
+        return doHttpCall(`/api/book/series`, 'POST', {
+            title,
+            series,
+            limit,
+            deleted,
+            langs
+        }).then(processResponse);
+    }
+
     static getBook(id) {
         return doHttpCall(`/api/book/${id}`, 'GET'
             ).then(processResponse);
