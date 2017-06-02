@@ -21,14 +21,6 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
         }
     };
 
-    const getHighlight = (termsString) => {
-        if (termsString) {
-            return new RegExp(termsString.split(/\s/).map(term => "("+term+")").join("|"), 'i');
-        } else {
-            return "";
-        }
-    };
-
     const handleItemClick = (e) => {
         if (onBookClick) {
             e.preventDefault();
@@ -48,10 +40,10 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
     return (
         <div className="book-line">
             <ListItem onClick={handleItemClick}
-                primaryText={<Highlight matchClass="highlighted" search={getHighlight(highlightTitle)}>{book.title}</Highlight>}
+                primaryText={<Highlight matchClass="highlighted" search={BookUtils.getHighlightRegex(highlightTitle)}>{book.title}</Highlight>}
                 secondaryText={
                     <p>
-                        <Highlight matchClass="highlighted" search={getHighlight(highlightAuthor)}>{getSecondaryLine()}</Highlight>
+                        <Highlight matchClass="highlighted" search={BookUtils.getHighlightRegex(highlightAuthor)}>{getSecondaryLine()}</Highlight>
                     </p>
                 }
                 secondaryTextLines={1}

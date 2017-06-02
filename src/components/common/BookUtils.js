@@ -14,6 +14,16 @@ class BookUtils {
     static formatSize(size) {
         return new Intl.NumberFormat().format(size);
     }
+
+    static getHighlightRegex(searchString) {
+        if (searchString) {
+            let reStr = searchString.trim().split(/\s/).map(term => "("+term+")").join("|");
+            return new RegExp(reStr, 'i');
+        } else {
+            return "";
+        }
+
+    }
 }
 
 export default BookUtils;

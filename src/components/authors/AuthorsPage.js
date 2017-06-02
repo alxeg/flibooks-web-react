@@ -91,10 +91,11 @@ class AuthorsPage extends React.Component {
                 </form>
                 <List>
                     {this.props.authors.map(author =>
-                        (<ListItem
+                        (
+                            <ListItem
                             key={author.ID}
                             className="author-line"
-                            primaryText={<Highlight matchClass="highlighted" search={this.state.authorsQuery}>{BookUtils.stripSymbols(author.name)}</Highlight>}
+                            primaryText={<Highlight matchClass="highlighted" search={BookUtils.getHighlightRegex(this.state.authorsQuery)}>{BookUtils.stripSymbols(author.name)}</Highlight>}
                             leftAvatar={
                                 <Avatar
                                     icon={<SocialPeople />}
