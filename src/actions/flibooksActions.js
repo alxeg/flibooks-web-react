@@ -107,7 +107,7 @@ export function searchBooksSeries(title, series) {
 
         const langs = getState().options.selectedLangs;
         const deleted = !getState().options.noDeleted;
-        return FlibooksAPI.searchForBooksSeries(title, series, 20, deleted, langs).then(books => {
+        return FlibooksAPI.searchForBooksSeries(title, series, undefined, deleted, langs).then(books => {
             dispatch(searchBooksSeriesSuccess(title, series, books));
         }).catch(error => {
             dispatch(ajaxCallError(error));

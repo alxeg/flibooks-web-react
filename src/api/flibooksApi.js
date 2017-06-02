@@ -31,7 +31,7 @@ class FlibooksAPI {
     static searchForAuthors(name) {
         return doHttpCall("/api/author/search", 'POST', {
                         author: name,
-                        limit: 20
+                        limit: 100
             }).then(processResponse);
     }
 
@@ -57,7 +57,7 @@ class FlibooksAPI {
         }).then(processResponse);
     }
 
-    static searchForBooksSeries(title, series, limit = 20, deleted, langs) {
+    static searchForBooksSeries(title, series, limit, deleted, langs) {
         return doHttpCall(`/api/book/series`, 'POST', {
             title,
             series,
