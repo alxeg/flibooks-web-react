@@ -68,6 +68,7 @@ export function getAuthor(id) {
 
 export function getAuthorBooks(id) {
     return (dispatch, getState) => {
+        dispatch(getAuthorBooksSuccess([]));
         dispatch(beginAjaxCall());
 
         const langs = getState().options.selectedLangs;
