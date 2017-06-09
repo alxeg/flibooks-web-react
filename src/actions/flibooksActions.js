@@ -14,6 +14,10 @@ export function getAuthorBooksSuccess(books) {
     return { type: types.GET_AUTHOR_BOOKS_SUCCESS, books };
 }
 
+export function resetAuthorBooksDone() {
+    return { type: types.RESET_AUTHOR_BOOKS_DONE};
+}
+
 export function getLangsSuccess(langs) {
     return { type: types.GET_LANGS_SUCCESS, langs };
 }
@@ -72,7 +76,7 @@ export function getAuthor(id) {
 
 export function getAuthorBooks(id) {
     return (dispatch, getState) => {
-        dispatch(getAuthorBooksSuccess([]));
+        dispatch(resetAuthorBooksDone());
         dispatch(beginAjaxCall());
 
         const langs = getState().options.selectedLangs;

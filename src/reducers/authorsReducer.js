@@ -14,6 +14,10 @@ export default function authorsReducer(state = initialState.authors, action) {
       return Object.assign({}, state,
         {author: Object.assign({}, state.author, {books: action.books})});
 
+    case types.RESET_AUTHOR_BOOKS_DONE:
+      return Object.assign({}, state,
+        {author: Object.assign({}, state.author, {books: []})});
+
     default:
       return state;
   }
