@@ -6,10 +6,13 @@ import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
 import {List, ListItem} from 'material-ui/List';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import BookRow from '../common/BookRow';
 import BookUtils from '../common/BookUtils';
 import BookDetailsDialog from '../common/BookDetailsDialog';
 import toast from 'toast.js';
+import $ from 'jquery/dist/jquery.min';
 
 class AuthorBooksPage extends Component {
     constructor(props, context) {
@@ -17,6 +20,7 @@ class AuthorBooksPage extends Component {
 
         this.handleBookClick = this.handleBookClick.bind(this);
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
+        this.handleDownloadAllClick = this.handleDownloadAllClick.bind(this);
 
         this.state = {
             detailsShown: false,
@@ -68,12 +72,22 @@ class AuthorBooksPage extends Component {
         }, 2000);
     }
 
+    handleDownloadAllClick(e) {
+        let formData = $("#selectForm").serialize();
+        this.setState({downloadLink: `/api/book/archive?${formData}`});
+        // iframe's onload does not work, so reset link with timeout
+        setTimeout(() => {
+            this.setState({downloadLink:'about:blank'});
+        }, 2000);
+        $('#selectForm').find('input:checkbox').prop('checked', false);
+    }
+
     render() {
         const author = this.props.author;
         return (
             <div>
                 {author &&
-                    (<div>
+                    (<form id="selectForm">
                         <h1 className="page-title">{BookUtils.stripSymbols(author.name)}</h1>
                         {author.books &&
                             <List>
@@ -88,9 +102,11 @@ class AuthorBooksPage extends Component {
                                 )}
                             </List>
                         }
-                    </div>
+                        <RaisedButton label="Download Selected" primary fullWidth  onClick={this.handleDownloadAllClick}/>
+                    </form>
                     )
                 }
+
                 <BookDetailsDialog
                     open={this.state.detailsShown}
                     book={this.props.book}

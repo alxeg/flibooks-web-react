@@ -32,6 +32,7 @@ class BooksPage extends React.Component {
 
         this.handleBookClick = this.handleBookClick.bind(this);
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
+        this.handleDownloadAllClick = this.handleDownloadAllClick.bind(this);
 
     }
 
@@ -79,6 +80,16 @@ class BooksPage extends React.Component {
         }, 2000);
     }
 
+    handleDownloadAllClick(e) {
+        let formData = $("#selectForm").serialize();
+        this.setState({downloadLink: `/api/book/archive?${formData}`});
+        // iframe's onload does not work, so reset link with timeout
+        setTimeout(() => {
+            this.setState({downloadLink:'about:blank'});
+        }, 2000);
+        $('#selectForm').find('input:checkbox').prop('checked', false);
+    }
+
     showError(message) {
         toast.error({
             message
@@ -118,19 +129,23 @@ class BooksPage extends React.Component {
                     </div>
                 </form>
                 {this.props.books &&
-                    <List>
-                        {this.props.books.map(book =>
-                            (<BookRow
-                                key={book.ID}
-                                book={book}
-                                showAuthor
-                                onBookClick={this.handleBookClick}
-                                onDownloadClick={() => this.handleDownloadClick(book)}
-                                highlightTitle={this.state.title}
-                                highlightAuthor={this.state.author}
-                            />)
-                        )}
-                    </List>
+                    (<form id="selectForm">
+                        <List>
+                            {this.props.books.map(book =>
+                                (<BookRow
+                                    key={book.ID}
+                                    book={book}
+                                    showAuthor
+                                    onBookClick={this.handleBookClick}
+                                    onDownloadClick={() => this.handleDownloadClick(book)}
+                                    highlightTitle={this.state.title}
+                                    highlightAuthor={this.state.author}
+                                />)
+                            )}
+                        </List>
+                        <RaisedButton label="Download Selected" primary fullWidth  onClick={this.handleDownloadAllClick}/>
+                    </form>
+                    )
                 }
                 <BookDetailsDialog
                     open={this.state.detailsShown}

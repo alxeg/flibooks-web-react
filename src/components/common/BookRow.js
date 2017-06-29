@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {ListItem} from 'material-ui/List';
 import Highlight from 'react-highlighter';
 
+import Checkbox from 'material-ui/Checkbox';
 import FileFileDownload from 'material-ui/svg-icons/file/file-download';
 import IconButton from 'material-ui/IconButton';
 
@@ -22,15 +23,17 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
     };
 
     const handleItemClick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         if (onBookClick) {
-            e.preventDefault();
             onBookClick(book);
         }
     };
 
     const handleDownloadClick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         if (onDownloadClick) {
-            e.stopPropagation();
             onDownloadClick(book);
         }
     };
@@ -54,6 +57,9 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
                         tooltip={formattedSize}>
                             <FileFileDownload className="book-row-download-icon" color={cyan500}  />
                     </IconButton>
+                }
+                leftCheckbox={
+                    <input style={{height: '20px', width: '20px'}} className="bookCheckbox" type="checkbox" name="id" value={book.ID} onClick={(e) => e.stopPropagation()} />
                 }
             />
         </div>
