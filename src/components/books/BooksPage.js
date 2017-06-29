@@ -14,6 +14,7 @@ import BookUtils from '../common/BookUtils';
 import BookDetailsDialog from '../common/BookDetailsDialog';
 
 import toast from 'toast.js';
+import $ from 'jquery/dist/jquery.min';
 
 class BooksPage extends React.Component {
     constructor(props, context) {
@@ -86,7 +87,7 @@ class BooksPage extends React.Component {
         // iframe's onload does not work, so reset link with timeout
         setTimeout(() => {
             this.setState({downloadLink:'about:blank'});
-        }, 2000);
+        }, 4000);
         $('#selectForm').find('input:checkbox').prop('checked', false);
     }
 

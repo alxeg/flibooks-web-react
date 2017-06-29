@@ -78,7 +78,7 @@ class AuthorBooksPage extends Component {
         // iframe's onload does not work, so reset link with timeout
         setTimeout(() => {
             this.setState({downloadLink:'about:blank'});
-        }, 2000);
+        }, 4000);
         $('#selectForm').find('input:checkbox').prop('checked', false);
     }
 
