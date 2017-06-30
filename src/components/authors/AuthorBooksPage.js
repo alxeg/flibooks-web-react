@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
+import Checkbox from 'material-ui/Checkbox';
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -37,19 +38,23 @@ class AuthorBooksPage extends BaseBooksPage {
                     (<form id="selectForm">
                         <h1 className="page-title">{BookUtils.stripSymbols(author.name)}</h1>
                         {author.books &&
-                            <List>
-                                {author.books.map(book =>
-                                    (<BookRow
-                                        key={book.ID}
-                                        book={book}
-                                        showAuthor={false}
-                                        onBookClick={this.handleBookClick}
-                                        onDownloadClick={() => this.handleDownloadClick(book)}
-                                    />)
-                                )}
-                            </List>
+                            <div>
+                                <Checkbox disabled={author.books.length==0} style={{marginLeft: '15px'}} label="Select All" onCheck={this.handleSelectAll} />
+                                <List>
+                                    {author.books.map(book =>
+                                        (<BookRow
+                                            key={book.ID}
+                                            book={book}
+                                            showAuthor={false}
+                                            onBookClick={this.handleBookClick}
+                                            onDownloadClick={() => this.handleDownloadClick(book)}
+                                            onBookSelection={this.handleBookSelection}
+                                        />)
+                                    )}
+                                </List>
+                                <RaisedButton label={"Download "+this.state.booksSelected +" Books"} disabled={this.state.booksSelected==0} primary fullWidth  onClick={this.handleDownloadAllClick}/>
+                            </div>
                         }
-                        <RaisedButton label="Download Selected" primary fullWidth  onClick={this.handleDownloadAllClick}/>
                     </form>
                     )
                 }

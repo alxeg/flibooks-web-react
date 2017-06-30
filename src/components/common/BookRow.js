@@ -12,7 +12,7 @@ import {cyan500} from 'material-ui/styles/colors';
 
 import BookUtils from './BookUtils';
 
-const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick, onDownloadClick}) => {
+const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick, onDownloadClick, onBookSelection}) => {
 
     const getSecondaryLine = () => {
         if (showAuthor) {
@@ -38,6 +38,12 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
         }
     };
 
+    const handleBookSelection = (e) => {
+        if (onBookSelection) {
+            onBookSelection(e.target.checked, book);
+        }
+    };
+
     const formattedSize = BookUtils.formatSize(book.file_size);
 
     return (
@@ -59,7 +65,13 @@ const BookRow = ({book, showAuthor, highlightTitle, highlightAuthor, onBookClick
                     </IconButton>
                 }
                 leftCheckbox={
-                    <input style={{height: '20px', width: '20px'}} className="bookCheckbox" type="checkbox" name="id" value={book.ID} onClick={(e) => e.stopPropagation()} />
+                    <input
+                        style={{height: '20px', width: '20px'}}
+                        className="bookCheckbox"
+                        type="checkbox"
+                        name="id" value={book.ID}
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={handleBookSelection}/>
                 }
             />
         </div>
@@ -72,7 +84,8 @@ BookRow.propTypes = {
     highlightTitle: PropTypes.string,
     highlightAuthor: PropTypes.string,
     onBookClick: PropTypes.func,
-    onDownloadClick: PropTypes.func
+    onDownloadClick: PropTypes.func,
+    onBookSelection: PropTypes.func
 };
 
 export default BookRow;

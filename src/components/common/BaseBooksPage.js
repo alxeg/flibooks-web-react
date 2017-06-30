@@ -10,13 +10,15 @@ class BaseBooksComponent extends React.Component {
 
         this.state = {
             detailsShown: false,
-            detailsRequested: false
+            detailsRequested: false,
+            booksSelected: 0
         };
 
         this.handleBookClick = this.handleBookClick.bind(this);
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
         this.handleDownloadAllClick = this.handleDownloadAllClick.bind(this);
-
+        this.handleSelectAll = this.handleSelectAll.bind(this);
+        this.handleBookSelection = this.handleBookSelection.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -54,6 +56,19 @@ class BaseBooksComponent extends React.Component {
             this.setState({downloadLink:'about:blank'});
         }, 4000);
         $('#selectForm').find('input:checkbox').prop('checked', false);
+        setTimeout(() => {
+            this.handleBookSelection();
+        }, 100);
+    }
+
+    handleSelectAll(e) {
+        $('#selectForm').find('.bookCheckbox').prop('checked', e.target.checked);
+        setTimeout(this.handleBookSelection, 100);
+    }
+
+    handleBookSelection(selected, book) {
+        let selNo = $('#selectForm').find('.bookCheckbox:checked').length;
+        this.setState({booksSelected: selNo});
     }
 
     showError(message) {

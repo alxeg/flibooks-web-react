@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
+import Checkbox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {List, ListItem} from 'material-ui/List';
@@ -81,12 +82,13 @@ class SeriesPage extends BaseBooksPage {
                 </form>
                 {this.props.seriesBooks &&
                     (<form id="selectForm">
+                        <Checkbox disabled={this.props.seriesBooks.length==0} style={{marginLeft: '15px'}} label="Select All" onCheck={this.handleSelectAll} />
                         <List>
                             {this.props.seriesBooks.map(book =>
                                 (<BookRow
                                     key={book.ID}
                                     book={book}
-                                    showseries
+                                    showAuthor={false}
                                     onBookClick={this.handleBookClick}
                                     onDownloadClick={() => this.handleDownloadClick(book)}
                                     highlightTitle={this.state.seriesTitle}
@@ -94,7 +96,7 @@ class SeriesPage extends BaseBooksPage {
                                 />)
                             )}
                         </List>
-                        <RaisedButton label="Download Selected" primary fullWidth  onClick={this.handleDownloadAllClick}/>
+                        <RaisedButton label={"Download "+this.state.booksSelected +" Books"} disabled={this.state.booksSelected==0} primary fullWidth  onClick={this.handleDownloadAllClick}/>
                     </form>
                     )
                 }
