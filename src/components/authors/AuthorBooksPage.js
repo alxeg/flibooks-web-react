@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
@@ -10,22 +10,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import BookRow from '../common/BookRow';
 import BookUtils from '../common/BookUtils';
+import BaseBooksPage from '../common/BaseBooksPage';
 import BookDetailsDialog from '../common/BookDetailsDialog';
-import toast from 'toast.js';
-import $ from 'jquery/dist/jquery.min';
 
-class AuthorBooksPage extends Component {
+class AuthorBooksPage extends BaseBooksPage {
     constructor(props, context) {
         super(props, context);
-
-        this.handleBookClick = this.handleBookClick.bind(this);
-        this.handleDownloadClick = this.handleDownloadClick.bind(this);
-        this.handleDownloadAllClick = this.handleDownloadAllClick.bind(this);
-
-        this.state = {
-            detailsShown: false,
-            detailsRequested: false
-        };
     }
 
     componentWillMount() {
@@ -37,49 +27,6 @@ class AuthorBooksPage extends Component {
         } else if ( author.ID != authorId || !Array.isArray(author.books) ) {
             this.props.actions.getAuthorBooks(authorId);
         }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.state.detailsRequested && nextProps.book) {
-            this.setState({
-                detailsShown: true,
-                detailsRequested: false
-            });
-        }
-    }
-
-    handleBookClick(book) {
-        this.setState({detailsRequested: true});
-        this.props.actions.getBook(book.ID)
-            .catch(error => {
-                error.then(message => {
-                    this.showError(message);
-                });
-            });
-    }
-
-    showError(message) {
-        toast.error({
-            message
-        });
-    }
-
-    handleDownloadClick(book) {
-        this.setState({downloadLink: `/api/book/${book.ID}/download`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 2000);
-    }
-
-    handleDownloadAllClick(e) {
-        let formData = $("#selectForm").serialize();
-        this.setState({downloadLink: `/api/book/archive?${formData}`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 4000);
-        $('#selectForm').find('input:checkbox').prop('checked', false);
     }
 
     render() {
