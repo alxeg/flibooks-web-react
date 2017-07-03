@@ -91,6 +91,7 @@ class SeriesPage extends BaseBooksPage {
                                     showAuthor={false}
                                     onBookClick={this.handleBookClick}
                                     onDownloadClick={() => this.handleDownloadClick(book)}
+                                    onBookSelection={this.handleBookSelection}
                                     highlightTitle={this.state.seriesTitle}
                                     highlightAuthor={this.state.seriesQuery}
                                 />)
