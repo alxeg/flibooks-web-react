@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import toast from 'toast.js';
 import $ from 'jquery/dist/jquery.min';
+import fileDownload from 'js-file-download';
+import contentDisposition from 'content-disposition';
 
 class BaseBooksComponent extends React.Component {
     constructor(props, context) {
@@ -42,19 +44,31 @@ class BaseBooksComponent extends React.Component {
     }
 
     handleDownloadClick(book) {
-        this.setState({downloadLink: `/api/book/${book.ID}/download`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 2000);
+        let filename = '';
+        fetch(`/api/book/${book.ID}/download`)
+            .then((response) => {
+                let disposition = contentDisposition.parse(response.headers.get('content-disposition'));
+                filename = disposition.parameters.filename;
+
+                return response.blob();
+            })
+            .then((data) => {
+                fileDownload(data, filename);
+            });
     }
 
     handleDownloadEpubClick(book) {
-        this.setState({downloadLink: `/api/book/${book.ID}/download?format=epub`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 2000);
+        let filename = '';
+        fetch(`/api/book/${book.ID}/download?format=epub`)
+            .then((response) => {
+                let disposition = contentDisposition.parse(response.headers.get('content-disposition'));
+                filename = disposition.parameters.filename;
+
+                return response.blob();
+            })
+            .then((data) => {
+                fileDownload(data, filename);
+            });
     }
 
     handleDownloadAllClick(e) {

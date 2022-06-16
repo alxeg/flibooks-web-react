@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as flibooksActions from '../../actions/flibooksActions';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {GridList, GridTile} from 'material-ui/GridList';
-import {List, ListItem} from 'material-ui/List';
+import { GridList, GridTile } from 'material-ui/GridList';
+import { List, ListItem } from 'material-ui/List';
 
 import BookCard from '../common/BookCard';
 
 import toast from 'toast.js';
+import fileDownload from 'js-file-download';
+import contentDisposition from 'content-disposition';
 
 class LibraryPage extends Component {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
-            idQuery: props.idQuery?props.idQuery:'',
+            idQuery: props.idQuery ? props.idQuery : '',
             idBooks: []
         };
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
@@ -44,19 +46,31 @@ class LibraryPage extends Component {
     }
 
     handleDownloadClick(book) {
-        this.setState({downloadLink: `/api/book/${book.ID}/download`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 2000);
+        let filename = '';
+        fetch(`/api/book/${book.ID}/download`)
+            .then((response) => {
+                let disposition = contentDisposition.parse(response.headers.get('content-disposition'));
+                filename = disposition.parameters.filename;
+
+                return response.blob();
+            })
+            .then((data) => {
+                fileDownload(data, filename);
+            });
     }
 
     handleDownloadEpubClick(book) {
-        this.setState({downloadLink: `/api/book/${book.ID}/download?format=epub`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 2000);
+        let filename = '';
+        fetch(`/api/book/${book.ID}/download?format=epub`)
+            .then((response) => {
+                let disposition = contentDisposition.parse(response.headers.get('content-disposition'));
+                filename = disposition.parameters.filename;
+
+                return response.blob();
+            })
+            .then((data) => {
+                fileDownload(data, filename);
+            });
     }
 
 
@@ -70,12 +84,12 @@ class LibraryPage extends Component {
         return (
             <div>
                 <h1 className="page-title">Library ID search</h1>
-                                <form onSubmit={this.handleSearchSubmit}>
-                    <div style={{display:'flex', flexDirection: 'row', alignItems: 'flex-end',width: '100%'}}>
+                <form onSubmit={this.handleSearchSubmit}>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', width: '100%' }}>
                         <TextField
                             hintText="Search by ID"
                             floatingLabelText="Book ID"
-                            style={{flex: 1}}
+                            style={{ flex: 1 }}
                             value={this.state.idQuery}
                             onChange={this.handleTextFieldChange}
                         />
@@ -83,22 +97,22 @@ class LibraryPage extends Component {
                         <RaisedButton
                             primary
                             label="Search"
-                            style={{flex: 0, width: 400, margin: '0 0 0 1rem'}}
+                            style={{ flex: 0, width: 400, margin: '0 0 0 1rem' }}
                             type="submit"
                         />
                     </div>
                 </form>
                 <List>
                     {this.props.idBooks && this.props.idBooks.map(book =>
-                        (<BookCard
-                            book={book}
-                            key={book.ID}
-                            onDownloadAction={() => this.handleDownloadClick(book)}
-                            onDownloadEpubAction={() => this.handleDownloadEpubClick(book)}
-                        />)
+                    (<BookCard
+                        book={book}
+                        key={book.ID}
+                        onDownloadAction={() => this.handleDownloadClick(book)}
+                        onDownloadEpubAction={() => this.handleDownloadEpubClick(book)}
+                    />)
                     )}
                 </List>
-                <iframe style={{display:'none'}} src={this.state.downloadLink} onLoad={() => this.setState({downloadLink:'about:blank'})}/>
+                <iframe style={{ display: 'none' }} src={this.state.downloadLink} onLoad={() => this.setState({ downloadLink: 'about:blank' })} />
             </div>
         );
     }
@@ -111,7 +125,7 @@ LibraryPage.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    const idBooks =  state.books && Array.isArray(state.books.idBooks) ? state.books.idBooks : [];
+    const idBooks = state.books && Array.isArray(state.books.idBooks) ? state.books.idBooks : [];
 
     return {
         idBooks
@@ -119,9 +133,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: bindActionCreators(flibooksActions, dispatch)
-  };
+    return {
+        actions: bindActionCreators(flibooksActions, dispatch)
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LibraryPage);

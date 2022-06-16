@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "content-disposition": "^0.5.4",
     "history": "^4.10.1",
+    "js-file-download": "^0.4.12",
     "material-ui": "^0.18.7",
     "prop-types": "^15.5.10",
     "react": "^15.7.0",
