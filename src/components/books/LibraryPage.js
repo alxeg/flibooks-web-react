@@ -51,6 +51,14 @@ class LibraryPage extends Component {
         }, 2000);
     }
 
+    handleDownloadEpubClick(book) {
+        this.setState({downloadLink: `/api/book/${book.ID}/download?format=epub`});
+        // iframe's onload does not work, so reset link with timeout
+        setTimeout(() => {
+            this.setState({downloadLink:'about:blank'});
+        }, 2000);
+    }
+
 
     showError(message) {
         toast.error({
@@ -86,6 +94,7 @@ class LibraryPage extends Component {
                             book={book}
                             key={book.ID}
                             onDownloadAction={() => this.handleDownloadClick(book)}
+                            onDownloadEpubAction={() => this.handleDownloadEpubClick(book)}
                         />)
                     )}
                 </List>

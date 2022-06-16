@@ -106,6 +106,7 @@ class SeriesPage extends BaseBooksPage {
                     book={this.props.book}
                     onCloseAction={() => this.setState({detailsShown: false})}
                     onDownloadAction={this.handleDownloadClick}
+                    onDownloadEpubAction={this.handleDownloadEpubClick}
                 />
                 <iframe style={{display:'none'}} src={this.state.downloadLink} onLoad={() => this.setState({downloadLink:'about:blank'})}/>
             </div>
