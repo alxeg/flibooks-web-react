@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import BookUtils from './BookUtils';
 
-const BookCard = ({book, onDownloadAction}) => {
+const BookCard = ({book, onDownloadAction, onDownloadEpubAction}) => {
     const descriptionLink = "http://flisland.net/b/"+book.lib_id;
     const formattedSize = BookUtils.formatSize(book.file_size);
     return (
@@ -42,8 +42,13 @@ const BookCard = ({book, onDownloadAction}) => {
             <CardActions>
                 <FlatButton
                     primary
-                    label="Download"
+                    label="Download FB2"
                     onTouchTap={() => onDownloadAction(book)}
+                />
+                <FlatButton
+                    primary
+                    label="Download EPUB"
+                    onTouchTap={() => onDownloadEpubAction(book)}
                 />
             </CardActions>
         </Card>
@@ -52,7 +57,8 @@ const BookCard = ({book, onDownloadAction}) => {
 
 BookCard.propTypes = {
     book: PropTypes.object,
-    onDownloadAction: PropTypes.func
+    onDownloadAction: PropTypes.func,
+    onDownloadEpubAction: PropTypes.func,
 };
 
 export default BookCard;

@@ -23,6 +23,7 @@ class BookDetailsDialog extends Component {
                     <BookCard
                         book={this.props.book}
                         onDownloadAction={this.props.onDownloadAction}
+                        onDownloadEpubAction={this.props.onDownloadEpubAction}
                     />
                 </Dialog>
             </div>
@@ -34,7 +35,8 @@ BookDetailsDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     book: PropTypes.object,
     onCloseAction: PropTypes.func,
-    onDownloadAction: PropTypes.func
+    onDownloadAction: PropTypes.func,
+    onDownloadEpubAction: PropTypes.func,
 };
 
 export default BookDetailsDialog;

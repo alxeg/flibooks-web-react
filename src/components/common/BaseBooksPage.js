@@ -16,6 +16,7 @@ class BaseBooksComponent extends React.Component {
 
         this.handleBookClick = this.handleBookClick.bind(this);
         this.handleDownloadClick = this.handleDownloadClick.bind(this);
+        this.handleDownloadEpubClick = this.handleDownloadEpubClick.bind(this);
         this.handleDownloadAllClick = this.handleDownloadAllClick.bind(this);
         this.handleSelectAll = this.handleSelectAll.bind(this);
         this.handleBookSelection = this.handleBookSelection.bind(this);
@@ -42,6 +43,14 @@ class BaseBooksComponent extends React.Component {
 
     handleDownloadClick(book) {
         this.setState({downloadLink: `/api/book/${book.ID}/download`});
+        // iframe's onload does not work, so reset link with timeout
+        setTimeout(() => {
+            this.setState({downloadLink:'about:blank'});
+        }, 2000);
+    }
+
+    handleDownloadEpubClick(book) {
+        this.setState({downloadLink: `/api/book/${book.ID}/download?format=epub`});
         // iframe's onload does not work, so reset link with timeout
         setTimeout(() => {
             this.setState({downloadLink:'about:blank'});
