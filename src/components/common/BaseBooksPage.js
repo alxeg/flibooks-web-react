@@ -73,15 +73,17 @@ class BaseBooksComponent extends React.Component {
 
     handleDownloadAllClick(e) {
         let formData = $("#selectForm").serialize();
-        this.setState({downloadLink: `/api/book/archive?${formData}`});
-        // iframe's onload does not work, so reset link with timeout
-        setTimeout(() => {
-            this.setState({downloadLink:'about:blank'});
-        }, 4000);
-        $('#selectForm').find('input:checkbox').prop('checked', false);
-        setTimeout(() => {
-            this.handleBookSelection();
-        }, 100);
+        let filename = '';
+        fetch( `/api/book/archive?${formData}`)
+            .then((response) => {
+                let disposition = contentDisposition.parse(response.headers.get('content-disposition'));
+                filename = disposition.parameters.filename;
+
+                return response.blob();
+            })
+            .then((data) => {
+                fileDownload(data, filename);
+            });
     }
 
     handleSelectAll(e) {

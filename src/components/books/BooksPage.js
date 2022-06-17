@@ -106,7 +106,6 @@ class BooksPage extends BaseBooksPage {
                     onDownloadAction={this.handleDownloadClick}
                     onDownloadEpubAction={this.handleDownloadEpubClick}
                 />
-                <iframe style={{display:'none'}} src={this.state.downloadLink} onLoad={() => this.setState({downloadLink:'about:blank'})}/>
             </div>
         );
     }

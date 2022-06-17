@@ -112,7 +112,6 @@ class LibraryPage extends Component {
                     />)
                     )}
                 </List>
-                <iframe style={{ display: 'none' }} src={this.state.downloadLink} onLoad={() => this.setState({ downloadLink: 'about:blank' })} />
             </div>
         );
     }
